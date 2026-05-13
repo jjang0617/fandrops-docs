@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FANDROPS — Not Scope / KPI·SLO</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --text-primary: #111111;
+  --text-secondary: #555555;
+  --text-muted: #999999;
+  --border: #e5e5e5;
+  --bg: #ffffff;
+  --bg-subtle: #f8f8f6;
+  --bg-dark: #111111;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+.page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 2.5rem 6rem;
+}
+
+/* ── Top bar ── */
+.topbar {
+  border-bottom: 1px solid var(--border);
+  padding: 1.5rem 0;
+  margin-bottom: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.topbar-left {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.doc-tag {
+  display: inline-block;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: var(--bg-dark);
+  color: #fff;
+  padding: 3px 10px;
+  border-radius: 3px;
+}
+
+/* ── Page title ── */
+.page-title {
+  margin-bottom: 4rem;
+}
+.page-title-eyebrow {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+.page-title h1 {
+  font-family: 'DM Sans', sans-serif;
+  font-size: clamp(1.8rem, 5vw, 2.6rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  color: var(--text-primary);
+}
+.page-title h1 span {
+  color: var(--text-muted);
+  font-weight: 300;
+}
+
+/* ── Section ── */
+.section { margin-bottom: 4rem; }
+
+.section-header {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+.section-num {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+}
+.section-title {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+}
+
+.body-text {
+  color: var(--text-secondary);
+  line-height: 1.85;
+  margin-bottom: 1rem;
+  font-size: 14.5px;
+}
+.body-text strong { color: var(--text-primary); font-weight: 500; }
+
+/* ── Not Scope ── */
+.notscope-intro {
+  background: var(--bg-subtle);
+  border-left: 3px solid var(--text-primary);
+  border-radius: 0 6px 6px 0;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.75rem;
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.8;
+}
+.notscope-intro strong { color: var(--text-primary); font-weight: 500; }
+
+.notscope-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 1.75rem;
+}
+.notscope-item {
+  background: var(--bg);
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+.notscope-x {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  min-width: 16px;
+  padding-top: 1px;
+  flex-shrink: 0;
+}
+.notscope-content-title {
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 3px;
+}
+.notscope-content-why {
+  font-size: 12.5px;
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+
+.tradeoff-box {
+  background: var(--bg-dark);
+  color: #fff;
+  border-radius: 6px;
+  padding: 1.75rem 2rem;
+}
+.tradeoff-box-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #888;
+  margin-bottom: 1rem;
+}
+.tradeoff-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.tradeoff-list li {
+  font-size: 14px;
+  color: #e0e0e0;
+  line-height: 1.6;
+  padding-left: 1.25rem;
+  position: relative;
+}
+.tradeoff-list li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: #666;
+}
+.tradeoff-list li strong { color: #fff; font-weight: 500; }
+
+/* ── KPI / SLO table ── */
+.kpi-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+  margin: 1.25rem 0;
+}
+.kpi-table th {
+  text-align: left;
+  padding: 9px 14px;
+  background: var(--bg-subtle);
+  color: var(--text-muted);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--border);
+}
+.kpi-table td {
+  padding: 13px 14px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-secondary);
+  vertical-align: top;
+  line-height: 1.6;
+}
+.kpi-table tr:last-child td { border-bottom: none; }
+.kpi-table td:first-child {
+  font-weight: 500;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+.kpi-table td code {
+  font-family: 'DM Mono', 'Courier New', monospace;
+  font-size: 12.5px;
+  background: var(--bg-subtle);
+  padding: 2px 6px;
+  border-radius: 3px;
+  color: var(--text-primary);
+}
+
+.kpi-rule {
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem 1.5rem;
+  margin-top: 1.25rem;
+  font-size: 13.5px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+.kpi-rule strong { color: var(--text-primary); font-weight: 500; }
+
+/* ── Team ── */
+.team-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+  margin: 1.25rem 0;
+}
+.team-table th {
+  text-align: left;
+  padding: 9px 14px;
+  background: var(--bg-subtle);
+  color: var(--text-muted);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--border);
+}
+.team-table td {
+  padding: 13px 14px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-secondary);
+  vertical-align: top;
+  line-height: 1.65;
+}
+.team-table tr:last-child td { border-bottom: none; }
+.team-table td:first-child {
+  font-weight: 500;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+.domain-badge {
+  display: inline-block;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 3px;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  margin-bottom: 4px;
+  letter-spacing: 0.03em;
+}
+.team-detail {
+  font-size: 12.5px;
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+
+.collab-box {
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem 1.5rem;
+  margin-top: 1.25rem;
+  font-size: 13.5px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+.collab-box strong { color: var(--text-primary); font-weight: 500; }
+
+/* ── Roadmap ── */
+.roadmap-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+  margin: 1.25rem 0;
+}
+.roadmap-table th {
+  text-align: left;
+  padding: 9px 14px;
+  background: var(--bg-subtle);
+  color: var(--text-muted);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--border);
+}
+.roadmap-table td {
+  padding: 13px 14px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-secondary);
+  vertical-align: top;
+  line-height: 1.65;
+}
+.roadmap-table tr:last-child td { border-bottom: none; }
+.roadmap-table td:first-child {
+  white-space: nowrap;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+.roadmap-table td:nth-child(2) {
+  font-weight: 500;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+.week-dot {
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--text-primary);
+  margin-right: 8px;
+  vertical-align: 2px;
+}
+
+/* ── Arch principles ── */
+.principles-list {
+  list-style: none;
+  margin: 1.25rem 0;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.principles-list li {
+  display: flex;
+  gap: 1rem;
+  padding: 0.9rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+  align-items: flex-start;
+  font-size: 13.5px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+.principles-list li:last-child { border-bottom: none; }
+.principles-list li strong { color: var(--text-primary); font-weight: 500; }
+.p-num {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  min-width: 20px;
+  padding-top: 2px;
+}
+
+/* ── Footer ── */
+.footer {
+  border-top: 1px solid var(--border);
+  padding-top: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.footer-project {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.footer-nav {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.footer-nav a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+@media (max-width: 600px) {
+  .page { padding: 0 1.25rem 4rem; }
+  .notscope-grid { grid-template-columns: 1fr; }
+  .page-title h1 { font-size: 1.8rem; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="topbar">
+    <div class="topbar-left">FANDROPS · Backend Portfolio</div>
+    <div><span class="doc-tag">03</span></div>
+  </div>
+
+  <div class="page-title">
+    <div class="page-title-eyebrow">Planning Document</div>
+    <h1>Not Scope <span>/ KPI·SLO</span></h1>
+  </div>
+
+
+  <!-- ── 01 · Not Scope ── -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <span class="section-title">Not Scope — 의도적으로 안 한 것들</span>
+    </div>
+
+    <div class="notscope-intro">
+      이 프로젝트는 <strong>"무엇을 만들었냐"</strong>만큼 <strong>"무엇을 하지 않았냐"</strong>가 중요합니다.<br>
+      아래 항목들은 기술적 역량이 없어서가 아니라, <strong>핵심 정합성 문제에 집중하기 위한 의도적 트레이드오프</strong>입니다.
+      7주라는 제한된 시간 안에 깊이 없이 여러 기능을 나열하는 대신,
+      동시성 제어·분산 트랜잭션·대용량 성능이라는 뼈대에 모든 리소스를 집중했습니다.
+    </div>
+
+    <div class="notscope-grid">
+      <div class="notscope-item">
+        <span class="notscope-x">✕</span>
+        <div>
+          <div class="notscope-content-title">실시간 채팅</div>
+          <div class="notscope-content-why">WebSocket 인프라 복잡도가 높고, 핵심 도메인(주문·결제·예약)과 무관. 트래픽 정합성 증명에 집중.</div>
+        </div>
+      </div>
+      <div class="notscope-item">
+        <span class="notscope-x">✕</span>
+        <div>
+          <div class="notscope-content-title">영상 업로드</div>
+          <div class="notscope-content-why">스토리지·CDN·인코딩 파이프라인은 별도 도메인. 백엔드 트랜잭션 증명과 관련 없음.</div>
+        </div>
+      </div>
+      <div class="notscope-item">
+        <span class="notscope-x">✕</span>
+        <div>
+          <div class="notscope-content-title">추천 시스템</div>
+          <div class="notscope-content-why">ML 파이프라인·피처 엔지니어링은 별도 전문 영역. 팬덤 커머스의 핵심 기술 과제가 아님.</div>
+        </div>
+      </div>
+      <div class="notscope-item">
+        <span class="notscope-x">✕</span>
+        <div>
+          <div class="notscope-content-title">완전한 MSA</div>
+          <div class="notscope-content-why">초기부터 MSA는 운영 복잡도만 높임. 모듈러 모놀리스로 도메인 경계를 증명하고, 필요 시 점진 분리.</div>
+        </div>
+      </div>
+      <div class="notscope-item">
+        <span class="notscope-x">✕</span>
+        <div>
+          <div class="notscope-content-title">모바일 앱</div>
+          <div class="notscope-content-why">백엔드 포트폴리오 프로젝트. API 설계와 성능 증명이 목적이며, 클라이언트 구현은 범위 외.</div>
+        </div>
+      </div>
+      <div class="notscope-item">
+        <span class="notscope-x">✕</span>
+        <div>
+          <div class="notscope-content-title">글로벌 다국어 / 다중 결제수단</div>
+          <div class="notscope-content-why">MVP 범위 외. 단일 결제 API(토스페이먼츠) 연동으로 멱등성·Saga 패턴을 깊게 증명하는 데 집중.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tradeoff-box">
+      <div class="tradeoff-box-label">우리의 입장</div>
+      <ul class="tradeoff-list">
+        <li>위 항목들은 <strong>기술적 역량 부족이 아닌, 의도적 트레이드오프</strong>다.</li>
+        <li>우리는 <strong>핵심 정합성 문제 — 동시성·분산 트랜잭션·대용량 성능</strong>에 집중했다.</li>
+        <li>기능의 수가 아니라, <strong>하나의 문제를 얼마나 깊이 파고들었는지</strong>로 평가받는다.</li>
+        <li>추가 기능보다 <strong>장애 복구 가능성과 측정 가능한 수치</strong>를 우선했다.</li>
+      </ul>
+    </div>
+  </div>
+
+
+  <!-- ── 02 · KPI / SLO ── -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <span class="section-title">KPI / SLO — 성공 기준</span>
+    </div>
+
+    <p class="body-text">
+      아래 5개 지표가 이 프로젝트의 <strong>합격 기준</strong>입니다.
+      기능 구현보다 이 수치 달성이 우선이며, 하나라도 미달이면 기능 추가 전에 원인 해결을 먼저 합니다.
+    </p>
+
+    <table class="kpi-table">
+      <thead>
+        <tr>
+          <th style="width: 110px;">구분</th>
+          <th>SLO (합격 기준)</th>
+          <th>측정 방법</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>정합성</td>
+          <td>오버셀·중복 예약·중복 결제 <code>0건</code></td>
+          <td>부하 후 DB·이벤트 로그 검증</td>
+        </tr>
+        <tr>
+          <td>결제 복구</td>
+          <td>결제 실패 건 <code>100%</code>가 <code>60초 내</code> 보상(재고·상태) 완료</td>
+          <td>웹훅·Outbox·보상 이벤트 대조</td>
+        </tr>
+        <tr>
+          <td>Write 성능</td>
+          <td>주문/예약/결제 <code>P95 &lt; 300ms</code><br><span style="font-size:12px; color: var(--text-muted);">(합의한 목표 TPS 기준)</span></td>
+          <td>k6 + Grafana</td>
+        </tr>
+        <tr>
+          <td>안정성</td>
+          <td><code>5xx &lt; 0.1%</code>, 타임아웃 임계 이하</td>
+          <td>로그 / APM 집계</td>
+        </tr>
+        <tr>
+          <td>공정성·방어</td>
+          <td>Rate limit 위반 요청 <code>429</code> 처리<br>대기열 처리량 목표 달성</td>
+          <td>차단 로그·대기열 depth</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="kpi-rule">
+      <strong>팀 규칙:</strong> 위 5개 중 하나라도 미달이면 기능 추가보다 원인 해결·튜닝을 우선한다.
+      "동작한다"와 "수치를 증명한다"는 다르다. 모든 핵심 선택은 근거와 실험 결과를 남긴다.
+    </div>
+  </div>
+
+
+  <!-- ── 03 · 팀 구성 ── -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <span class="section-title">팀 구성 — 도메인 오너십</span>
+    </div>
+
+    <p class="body-text">
+      단순 역할 분배가 아닌 <strong>도메인 오너십</strong> 형태로 운영합니다.
+      각 오너는 코드 + 테스트 + 측정 지표 + STAR 트러블슈팅을 같은 도메인 산출물로 관리합니다.
+    </p>
+
+    <table class="team-table">
+      <thead>
+        <tr>
+          <th style="width: 80px;">담당자</th>
+          <th style="width: 160px;">도메인</th>
+          <th>핵심 책임</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>지영재</td>
+          <td>
+            <div class="domain-badge">Infra & SRE</div>
+          </td>
+          <td>
+            <div class="team-detail">AWS (VPC·EC2·RDS·ElastiCache), Nginx, GitHub Actions, Prometheus/Grafana, k6 부하 테스트, 무중단 배포·롤백, 병목 리포트</div>
+          </td>
+        </tr>
+        <tr>
+          <td>표지민</td>
+          <td>
+            <div class="domain-badge">Auth & Security</div>
+          </td>
+          <td>
+            <div class="team-detail">JWT 발급·갱신·인가, 토큰 재발급 전략, Redis + Bucket4j Rate Limiting, 매크로·어뷰징 방어 정책</div>
+          </td>
+        </tr>
+        <tr>
+          <td>정환철</td>
+          <td>
+            <div class="domain-badge">Product / Read</div>
+          </td>
+          <td>
+            <div class="team-detail">상품·이벤트 조회 API, 커서 기반 페이징, Redis 캐시·스탬피드 방어 (Single Flight / TTL Jitter), N+1·쿼리 최적화</div>
+          </td>
+        </tr>
+        <tr>
+          <td>형성빈</td>
+          <td>
+            <div class="domain-badge">Order / Reservation</div>
+          </td>
+          <td>
+            <div class="team-detail">선착순 재고·좌석 예약, 낙관적·비관적·분산 락(Redisson) 비교 구현, 동시성 정합성 테스트 및 성능 수치화</div>
+          </td>
+        </tr>
+        <tr>
+          <td>장성재</td>
+          <td>
+            <div class="domain-badge">Payment / Event</div>
+          </td>
+          <td>
+            <div class="team-detail">결제 API·웹훅 연동, 멱등 키, Outbox 패턴, Kafka 이벤트 발행, 결제 실패 시 Saga 보상 트랜잭션</div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="collab-box">
+      <strong>협업 원칙</strong> — PR 머지 전 오너 리뷰 필수 / API 변경 시 계약 문서 동시 수정 /
+      장애 발생 시 해당 도메인 오너가 1차 대응 / KPI 미달 시 오너가 원인 분석 리포트 제출
+    </div>
+  </div>
+
+
+  <!-- ── 04 · 로드맵 ── -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <span class="section-title">개발 로드맵 — 병렬 마일스톤 (5.19 – 6.25)</span>
+    </div>
+
+    <p class="body-text">
+      5개 도메인이 <strong>병렬로 동시 진행</strong>합니다. 주차별 마일스톤은 전체 팀의 동기화 기준점이며,
+      각 도메인 오너는 해당 주차 목표를 독립적으로 수행합니다.
+      부하 테스트는 단순 마감 작업이 아닌 <strong>핵심 검증 단계</strong>로, 2주를 배정했습니다.
+    </p>
+
+    <!-- Phase 1 -->
+    <div style="margin: 2rem 0 0.5rem;">
+      <div style="font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.75rem;">
+        Phase 1 &nbsp;·&nbsp; 5.19 – 5.25 &nbsp;·&nbsp; 설계 확정 & 환경 세팅 (전원 참여)
+      </div>
+      <table class="roadmap-table" style="margin: 0;">
+        <thead>
+          <tr>
+            <th style="width: 100px;">담당자</th>
+            <th>이번 주 목표</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>지영재<br><span style="font-size:11px; color:var(--text-muted);">Infra</span></td>
+            <td>AWS 환경 프로비저닝 (VPC·EC2·RDS·ElastiCache), GitHub Actions CI/CD 파이프라인 구축, 모니터링 기반(Prometheus·Grafana) 세팅</td>
+          </tr>
+          <tr>
+            <td>전원</td>
+            <td>Bounded Context 확정, ERD v0 설계, API 계약 문서(공통 응답·에러 코드·JWT·traceId) 수립, 브랜치·PR 규칙 합의</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Phase 2 -->
+    <div style="margin: 2rem 0 0.5rem;">
+      <div style="font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.75rem;">
+        Phase 2 &nbsp;·&nbsp; 5.26 – 6.08 &nbsp;·&nbsp; 코어 API 병렬 개발 (2주, 도메인별 독립 진행)
+      </div>
+      <table class="roadmap-table" style="margin: 0;">
+        <thead>
+          <tr>
+            <th style="width: 100px;">담당자</th>
+            <th>개발 목표</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>표지민<br><span style="font-size:11px; color:var(--text-muted);">Auth</span></td>
+            <td>JWT 발급·갱신·인가 구현, 토큰 재발급 전략, Redis + Bucket4j Rate Limiting 적용, 단위 테스트 작성</td>
+          </tr>
+          <tr>
+            <td>정환철<br><span style="font-size:11px; color:var(--text-muted);">Product</span></td>
+            <td>상품·이벤트 조회 API, 커서 기반 페이징, Redis 캐시 적용, N+1 문제 식별 및 1차 해결</td>
+          </tr>
+          <tr>
+            <td>형성빈<br><span style="font-size:11px; color:var(--text-muted);">Order</span></td>
+            <td>좌석·재고 예약 API, 낙관적·비관적 락 구현, 동시성 테스트 코드로 레이스 컨디션 재현</td>
+          </tr>
+          <tr>
+            <td>장성재<br><span style="font-size:11px; color:var(--text-muted);">Payment</span></td>
+            <td>결제 API 연동·웹훅 수신, 멱등 키 구현, Outbox 패턴 설계, Kafka 이벤트 발행 초안</td>
+          </tr>
+          <tr>
+            <td>지영재<br><span style="font-size:11px; color:var(--text-muted);">Infra</span></td>
+            <td>FE 빌드·배포 파이프라인 구성, Nginx 리버스 프록시 설정, 스테이징 환경 분리</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Phase 3 -->
+    <div style="margin: 2rem 0 0.5rem;">
+      <div style="font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.75rem;">
+        Phase 3 &nbsp;·&nbsp; 6.09 – 6.15 &nbsp;·&nbsp; 고도화 & FE 연동
+      </div>
+      <table class="roadmap-table" style="margin: 0;">
+        <thead>
+          <tr>
+            <th style="width: 100px;">담당자</th>
+            <th>개발 목표</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>표지민<br><span style="font-size:11px; color:var(--text-muted);">Auth</span></td>
+            <td>어뷰징 방어 고도화, Redis 대기열 시스템 구현 (Sorted Set), FE 로그인·토큰 갱신 흐름 연동</td>
+          </tr>
+          <tr>
+            <td>정환철<br><span style="font-size:11px; color:var(--text-muted);">Product</span></td>
+            <td>캐시 스탬피드 방어 (Single Flight · TTL Jitter), 쿼리 튜닝 (EXPLAIN 분석), FE 상품 조회 화면 연동</td>
+          </tr>
+          <tr>
+            <td>형성빈<br><span style="font-size:11px; color:var(--text-muted);">Order</span></td>
+            <td>Redisson 분산 락 전환, 락 전략 3종 성능 비교 수치화, FE 예약 플로우 연동</td>
+          </tr>
+          <tr>
+            <td>장성재<br><span style="font-size:11px; color:var(--text-muted);">Payment</span></td>
+            <td>Saga 보상 트랜잭션 완성, 결제 실패 시나리오 테스트, FE 결제 페이지 연동</td>
+          </tr>
+          <tr>
+            <td>지영재<br><span style="font-size:11px; color:var(--text-muted);">Infra</span></td>
+            <td>통합 테스트 환경 구성, Grafana 대시보드 1차 완성, k6 스크립트 시나리오 작성</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Phase 4 -->
+    <div style="margin: 2rem 0 0.5rem;">
+      <div style="font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 8px;">
+        Phase 4 &nbsp;·&nbsp; 6.16 – 6.22 &nbsp;·&nbsp; 부하 테스트 & 병목 튜닝
+        <span style="background: var(--bg-dark); color: #fff; font-size: 10px; padding: 2px 8px; border-radius: 3px; letter-spacing: 0.05em;">핵심 검증 단계</span>
+      </div>
+      <table class="roadmap-table" style="margin: 0;">
+        <thead>
+          <tr>
+            <th style="width: 100px;">담당자</th>
+            <th>검증 목표</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>지영재<br><span style="font-size:11px; color:var(--text-muted);">Infra</span></td>
+            <td>k6 Baseline → Stress → Spike 테스트 순차 실행, Grafana로 CPU·메모리·DB 커넥션·GC 병목 시각화, 팀원별 개선 지점 리포팅</td>
+          </tr>
+          <tr>
+            <td>표지민<br><span style="font-size:11px; color:var(--text-muted);">Auth</span></td>
+            <td>Rate Limiting 임계점 검증 (429 응답 확인), 대기열 depth 목표 달성 여부 측정, 매크로 시나리오 재현</td>
+          </tr>
+          <tr>
+            <td>정환철<br><span style="font-size:11px; color:var(--text-muted);">Product</span></td>
+            <td>Read P95 &lt; 50ms 달성, 캐시 OFF 시 스탬피드 재현 후 방어 로직 효과 수치 비교, 인덱스 최적화</td>
+          </tr>
+          <tr>
+            <td>형성빈<br><span style="font-size:11px; color:var(--text-muted);">Order</span></td>
+            <td>동시 1만 요청 시 오버셀 0건 검증, 락 전략별 TPS·지연시간 비교표 작성, 데드락 재현·해결 문서화</td>
+          </tr>
+          <tr>
+            <td>장성재<br><span style="font-size:11px; color:var(--text-muted);">Payment</span></td>
+            <td>결제 실패 → 60초 내 보상 완료 100% 검증, Outbox 메시지 유실 0건 확인, Write P95 &lt; 300ms 달성</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Phase 5 -->
+    <div style="margin: 2rem 0 0.5rem;">
+      <div style="font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.75rem;">
+        Phase 5 &nbsp;·&nbsp; 6.23 – 6.25 &nbsp;·&nbsp; 마무리 & 포트폴리오 마감
+      </div>
+      <table class="roadmap-table" style="margin: 0;">
+        <thead>
+          <tr>
+            <th style="width: 100px;">담당자</th>
+            <th>마감 작업</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>전원</td>
+            <td>STAR 기법 트러블슈팅 리포트 작성 (도메인별 1건 이상), 무중단 배포 최종 검증 (Blue-Green), README·Notion 문서 정리, 포트폴리오 최종 마감</td>
+          </tr>
+          <tr>
+            <td>지영재<br><span style="font-size:11px; color:var(--text-muted);">Infra</span></td>
+            <td>Grafana 대시보드 최종 스크린샷 정리, 부하 테스트 결과 보고서 완성, 롤백 시나리오 검증</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="margin-top: 1.5rem; background: var(--bg-subtle); border: 1px solid var(--border); border-radius: 6px; padding: 1rem 1.5rem; font-size: 13.5px; color: var(--text-secondary); line-height: 1.7;">
+      <strong style="color: var(--text-primary);">병렬 진행 원칙</strong> —
+      각 도메인 오너는 Phase 내에서 독립적으로 진행하되, 매주 월요일 전체 싱크에서 API 계약 변경·블로커·KPI 달성 현황을 공유합니다.
+      Phase 4 부하 테스트 결과가 KPI 미달이면 Phase 5 일정을 조정하고 튜닝을 연장합니다.
+    </div>
+  </div>
+
+
+  <!-- ── 05 · 아키텍처 원칙 ── -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <span class="section-title">아키텍처 원칙 (Engineering Principles)</span>
+    </div>
+
+    <ul class="principles-list">
+      <li>
+        <span class="p-num">01</span>
+        <span>기능보다 <strong>정합성</strong>을 우선한다.</span>
+      </li>
+      <li>
+        <span class="p-num">02</span>
+        <span>기능 추가보다 <strong>장애 복구 가능성</strong>을 우선한다.</span>
+      </li>
+      <li>
+        <span class="p-num">03</span>
+        <span>추상화보다 <strong>측정 가능한 단순함</strong>을 우선한다. Premature optimization을 피한다.</span>
+      </li>
+      <li>
+        <span class="p-num">04</span>
+        <span><strong>병목은 측정 후</strong> 해결한다. 추측으로 최적화하지 않는다.</span>
+      </li>
+      <li>
+        <span class="p-num">05</span>
+        <span><strong>운영 가능</strong>하지 않으면 완성된 기능이 아니다.</span>
+      </li>
+      <li>
+        <span class="p-num">06</span>
+        <span>모든 핵심 선택은 <strong>근거와 실험 결과</strong>를 남긴다 (ADR).</span>
+      </li>
+      <li>
+        <span class="p-num">07</span>
+        <span>아키텍처는 <strong>모듈러 모놀리스로 시작</strong>해 성능 병목 도메인만 점진적으로 분리한다.</span>
+      </li>
+    </ul>
+  </div>
+
+
+  <div class="footer">
+    <div class="footer-project">FANDROPS · Backend Portfolio · 5인 팀 · 2025.05.19 – 06.25</div>
+    <div class="footer-nav">
+      ← <a href="#">01 · 서비스 소개</a> &nbsp;&nbsp; → <a href="#">04 · 요구사항 정의서</a>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
