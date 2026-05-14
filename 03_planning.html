@@ -579,7 +579,7 @@ body {
   <div class="section">
     <div class="section-header">
       <span class="section-num">03</span>
-      <span class="section-title">팀 구성 — 도메인 오너십 (최종)</span>
+      <span class="section-title">팀 구성 — 도메인 오너십</span>
     </div>
 
     <p class="body-text">
@@ -588,28 +588,6 @@ body {
       도메인 경계는 <strong>"어떤 요청이 DB를 쓰는가"</strong>를 기준으로 나눴습니다.
       읽기(GET)와 쓰기(POST·PATCH)가 다른 오너에게 분리된 경우, 경계를 명확히 문서화합니다.
     </p>
-
-    <!-- 역할 분배 근거 -->
-    <div style="background: var(--bg-subtle); border: 1px solid var(--border); border-radius: 6px; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; font-size: 13.5px; color: var(--text-secondary); line-height: 1.8;">
-      <strong style="color: var(--text-primary); display: block; margin-bottom: 0.6rem;">왜 이렇게 나눴는가</strong>
-      기존 단순 "Auth / Product / Order / Payment" 4분할에서 실제 기능 규모에 맞게 재조정했습니다.
-      <br><br>
-      <strong style="color: var(--text-primary);">조회 도메인 경계 — 상품·피드가 핵심, 댓글은 정책 도메인</strong> — 조회 트래픽이 집중되는 구간은
-      상품·피드·랭킹·배너·캘린더입니다. 정환철은 이 Read-Heavy 구간의 캐시·N+1·페이징 최적화에 집중합니다.
-      댓글·하트는 조회보다 <strong>금칙어·도배 방어·정책 처리</strong>가 핵심인 커뮤니티 정책 도메인으로,
-      쓰기와 조회를 모두 형성빈이 소유합니다. 조회를 굳이 분리하면 "댓글 GET은 누구 것인가"라는
-      경계 혼란이 생기고, 실익보다 관리 비용이 커집니다.
-      <br><br>
-      <strong style="color: var(--text-primary);">이벤트 계약을 단일 오너(장성재)로 집중</strong> — Kafka 토픽·메시지 스키마·소비 파이프라인이
-      여러 도메인에 흩어지면 계약 변경 시 충돌이 잦습니다. 장성재는 <strong>주문·결제 흐름에서 발생하는
-      이벤트(결제완료·결제실패·재입고 알림 요청 등)의 계약과 버스·소비 파이프라인을 소유</strong>합니다.
-      단, 라이브 시작 등 이벤트 발생 주체가 Artist/System인 경우는 해당 도메인에서 트리거되며,
-      장성재는 그 이벤트가 버스를 타는 순간부터의 계약과 전달 파이프라인을 관리합니다.
-      <br><br>
-      <strong style="color: var(--text-primary);">표지민의 Communication 확장</strong> — 인증·인가에 더해 OTP·SMS·알림 전송 실행까지 묶은 이유는,
-      "누가 어떤 조건에서 메시지를 받는가"의 정책 판단이 Identity 도메인의 연장이기 때문입니다.
-      알림 발송 인프라 오너와 이벤트 계약 오너(장성재)가 분리되어 있음에 유의합니다.
-    </div>
 
     <table class="team-table">
       <thead>
