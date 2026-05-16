@@ -329,7 +329,6 @@ body {
   </div>
 
   <div class="page-title">
-    <div class="page-title-eyebrow">Research &amp; Pain Points</div>
     <h1>리서치 <span>/ 페인포인트</span></h1>
   </div>
 
@@ -344,7 +343,7 @@ body {
       K-Pop 팬덤 시장은 이미 수조 원 규모로 성장했지만, 팬들이 실제로 사용하는 플랫폼 경험은
       시장 규모를 전혀 따라가지 못하고 있습니다.
       위버스·멜론티켓·네이버 쇼핑 등 기존 플랫폼들은 팬덤의 <strong>극단적인 트래픽 스파이크</strong>와
-      <strong>감정적 구매 경험</strong>이라는 두 가지 특수성을 동시에 다루지 못합니다.
+      <strong>굿즈·결제 정합성</strong>이라는 특수성을 동시에 다루기 어렵습니다.
     </p>
     <p class="body-text">
       우리는 실제 팬 커뮤니티와 기획사 운영 사례를 분석하여,
@@ -379,7 +378,6 @@ body {
 
     <div class="pain-list">
 
-      <!-- 1 -->
       <div class="pain-item">
         <div class="pain-icon">💥</div>
         <div>
@@ -395,27 +393,36 @@ body {
         </div>
       </div>
 
-      <!-- 2 -->
       <div class="pain-item">
         <div class="pain-icon">🤖</div>
         <div>
-          <div class="pain-title">매크로 · 암표 문제</div>
+          <div class="pain-title">매크로·비정상 트래픽 (굿즈·오픈 구간)</div>
           <div class="pain-desc">
-            콘서트 티켓 오픈 시 봇이 수천 장을 선점하고 암표 시장으로 흘러갑니다.
-            우수 팬에게 사전 예매 기회를 주고, 오픈 당일 본인인증 + 문자 인증으로 매크로를 방지해야 한다는 요구가 있습니다.
-            단, <strong>매크로를 100% 차단하는 것은 현실적으로 불가능</strong>합니다.
-            정교한 봇은 사람과 구분하기 어렵고, 인증 절차를 강화할수록 정상 팬의 경험도 나빠집니다.
-            FANDROPS의 목표는 <strong>매크로 차단이 아닌 최소화</strong>입니다. Token Bucket Rate Limiting으로
-            비정상 호출 패턴을 차단하고, 우수 팬 사전 예매 + 본인인증으로 봇의 진입 비용을 높입니다.
+            핫딜·상품 API에 비정상 호출이 몰리면 정상 팬이 불리해집니다.
+            <strong>완전 차단은 불가능</strong>하므로, Rate Limiting·대기열·429로 <strong>피해 최소화</strong>가 목표입니다.
+            <br><span style="font-size:12.5px;color:var(--text-muted);">콘서트 및 팬미팅 행사는 외부 예매 링크</strong>만 제공합니다.</span>
           </div>
           <div class="pain-tag-row">
-            <span class="ptag ptag-scope">구현 — Rate Limiting · 사전예매 우선권</span>
-            <span class="ptag ptag-limit">한계 — 완전 차단 불가, 최소화 목표</span>
+            <span class="ptag ptag-scope">구현 — Bucket4j · 대기열 depth</span>
+            <span class="ptag ptag-limit">한계 — 100% 차단 불가</span>
           </div>
         </div>
       </div>
 
-      <!-- 3 -->
+      <div class="pain-item">
+        <div class="pain-icon">📦</div>
+        <div>
+          <div class="pain-title">핫딜·선착순 재고 오버셀</div>
+          <div class="pain-desc">
+            동시 요청 시 재고가 음수로 내려가거나, 품절인데 주문이 확정되는 사고가 납니다.
+            MVP에서는 <strong>오버셀 0</strong>을 합격선으로 두고, 락·동시성 전략을 부하로 검증합니다.
+          </div>
+          <div class="pain-tag-row">
+            <span class="ptag ptag-scope">구현 — 재고 동시성 · 부하 ~1k 동시</span>
+          </div>
+        </div>
+      </div>
+
       <div class="pain-item">
         <div class="pain-icon">🔄</div>
         <div>
@@ -431,50 +438,45 @@ body {
         </div>
       </div>
 
-      <!-- 4 -->
       <div class="pain-item">
-        <div class="pain-icon">📦</div>
+        <div class="pain-icon">🔔</div>
         <div>
           <div class="pain-title">품절 상품 재입고 알림 미작동</div>
           <div class="pain-desc">
-            기존 플랫폼에서 품절 상품을 찜해도 재입고 시 알림이 오지 않아 팬들이 직접 주기적으로 확인해야 합니다.
-            재입고 알림 구독 + Kafka 이벤트 기반 발송으로 해결합니다.
+            품절 후 재입고돼도 팬이 모르면 다시 놓칩니다.
+            <strong>재입고 관심 등록</strong> → 도메인 <strong>이벤트 발행</strong> → 알림 <strong>전송</strong> 파이프라인으로 해결합니다.
           </div>
           <div class="pain-tag-row">
-            <span class="ptag ptag-scope">구현 — 재입고 알림 구독 · Kafka 이벤트</span>
+            <span class="ptag ptag-scope">구현 — 발행/전송 분리</span>
           </div>
         </div>
       </div>
 
-      <!-- 5 -->
       <div class="pain-item">
         <div class="pain-icon">🏪</div>
         <div>
-          <div class="pain-title">오프라인 재고와 온라인 재고 불일치</div>
+          <div class="pain-title">오프라인·ERP급 재고와 온라인 실시간 불일치</div>
           <div class="pain-desc">
-            오프라인 행사(팬미팅, 쇼케이스) 현장 판매분이 온라인 재고에 즉시 반영되지 않아
-            온라인에서는 재고가 있는 것처럼 보이지만 실제 출고가 불가능한 상황이 발생합니다.
-            실시간 재고 연동 API 설계로 온·오프라인 재고를 단일 소스로 관리합니다.
+            현장 판매·ERP와 온라인 재고를 실시간 단일화하는 요구는 현실적으로 무겁습니다.
+            MVP는 <strong>온라인 재고·품절·재입고 알림</strong>에 집중하고, 오프라인 ERP 연동은 하지 않습니다.
           </div>
           <div class="pain-tag-row">
-            <span class="ptag ptag-scope">구현 — 재고 단일화 API 설계</span>
+            <span class="ptag ptag-limit">Not Scope — 이후 검토</span>
           </div>
         </div>
       </div>
 
-      <!-- 6 -->
       <div class="pain-item">
         <div class="pain-icon">🏆</div>
         <div>
-          <div class="pain-title">팬 충성도가 구매 기회에 반영되지 않음</div>
+          <div class="pain-title">팬 충성도·출석 점수 기반 드롭 우선권</div>
           <div class="pain-desc">
-            위버스 멤버십의 주요 혜택이 콘서트 선예매뿐이라는 불만이 많습니다.
-            오래 활동한 팬, 구매 이력이 많은 팬이 오히려 매크로 봇보다 불리한 상황입니다.
-            <strong>출석 포인트 + 구매 이력 점수</strong>를 합산한 팬 등급을 산정하고,
-            높은 등급의 팬에게 드롭 우선 접근권을 부여합니다.
+            리서치에서 “구매·출석 이력으로 선착순 우선권” 아이디어가 나왔으나,
+            확정 MVP 명세에는 <strong>팬 등급·포인트·드롭 우선 접근권</strong>이 없습니다.
+            대신 <strong>대기열</strong>·<strong>공정한 레이트리밋</strong>으로 오픈 구간을 다룹니다.
           </div>
           <div class="pain-tag-row">
-            <span class="ptag ptag-scope">구현 — 팬 등급 · 드롭 우선권</span>
+            <span class="ptag ptag-limit">Not Scope — 팬 등급·우선권 시스템</span>
           </div>
         </div>
       </div>
@@ -513,18 +515,18 @@ body {
         </div>
       </div>
 
-      <!-- 9 -->
       <div class="pain-item">
-        <div class="pain-icon">🚨</div>
+        <div class="pain-icon">💬</div>
         <div>
-          <div class="pain-title">커뮤니티 내 아티스트 비방 · 금칙어 관리 부재</div>
+          <div class="pain-title">댓글 도배·커뮤니티 품질</div>
           <div class="pain-desc">
-            일반 욕설 필터만으로는 아티스트를 특정하는 은어·비꼬는 표현을 잡아낼 수 없습니다.
-            아티스트 또는 기획사가 직접 금칙어를 등록·관리할 수 있는 권한을 부여하고,
-            신고 누적 시 해당 아티스트 커뮤니티 접근 차단까지 이어집니다.
+            댓글·하트에서 스팸·도배가 발생할 수 있습니다.
+            MVP는 <strong>기본 정책·레이트·도배 방어</strong> 수준으로 다루고,
+            아티스트가 직접 운영하는 <strong>금칙어 사전·신고 누적 영구 차단</strong> 같은 무거운 모더레이션 제품은 범위에서 뺍니다.
           </div>
           <div class="pain-tag-row">
-            <span class="ptag ptag-scope">구현 — 아티스트별 금칙어 관리 · 신고 누적 차단</span>
+            <span class="ptag ptag-scope">구현 — 댓글·정책·도배</span>
+            <span class="ptag ptag-limit">Not Scope — 아티스트별 금칙어·신고 제재 시스템</span>
           </div>
         </div>
       </div>
@@ -551,7 +553,7 @@ body {
   </div>
 
 
-  <!-- ── 03. 현실적 한계 정리 ── -->
+  <!-- ── 03. 현실적 한계 ── -->
   <div class="section">
     <div class="section-header">
       <span class="section-num">03</span>
@@ -560,36 +562,42 @@ body {
 
     <p class="body-text">
       좋은 설계는 할 수 있는 것만큼, <strong>할 수 없는 것을 명확히 아는 것</strong>에서 나옵니다.
-      아래 두 가지는 팀 내에서 논의 후 명시적으로 범위 밖으로 분류했습니다.
     </p>
 
     <div class="insight-box">
-      <div class="insight-label">우리가 인정하는 한계</div>
       <ul class="insight-list">
+        <li>
+          <strong>티켓은 팔지 않고 연결한다.</strong>
+          행사 안내 + 외부 링크 검증·노출만.
+        </li>
         <li>
           <strong>매크로 완전 차단은 불가능하다.</strong>
           충분히 정교한 봇은 사람과 구분이 어렵다. Rate Limiting·본인인증·팬 등급 우선권으로
           봇의 수익성을 낮추는 것이 현실적인 목표다.
         </li>
         <li>
+          <strong>오프라인 ERP급 재고 연동은 MVP 제외.</strong>
+          온라인 재고·오버셀 0·재입고 알림에 집중.
+        </li>
+        <li>
+          <strong>팬 등급·출석 포인트 우선권은 복잡도가 높아질 우려가 있다.</strong>
+          리서치 아이디어로 남긴다.
+        </li>
+        <li>
           <strong>해외 배송 실시간 타임라인은 MVP에서 제외한다.</strong>
           국제 물류 API는 캐리어별 규격 통일이 안 되어 있고 신뢰도가 낮다.
           이 문제에 리소스를 쓰는 것보다 정합성·동시성 핵심 과제에 집중하는 것이 포트폴리오 가치가 높다.
-        </li>
-        <li>
-          <strong>토너먼트 단계 수(이달의 아이돌 몇 강)는 미확정이다.</strong>
-          랭킹 집계 구조를 먼저 설계하고, 운영 방식은 론칭 후 결정한다.
         </li>
       </ul>
     </div>
   </div>
 
 
-  <!-- ── 04. 도출된 핵심 기능 요구사항 ── -->
+  <!-- ── 04. 도출된 핵심 기능 ── -->
   <div class="section">
     <div class="section-header">
       <span class="section-num">04</span>
-      <span class="section-title">페인포인트 → 핵심 기능 도출</span>
+      <span class="section-title">페인포인트 → MVP 기능 도출</span>
     </div>
 
     <p class="body-text">
@@ -600,25 +608,17 @@ body {
     <div class="req-derive">
       <div class="req-derive-header">페인포인트 → 기능 매핑</div>
 
-      <div class="req-derive-item">
+<div class="req-derive-item">
         <span class="req-dot">인프라</span>
         <div class="req-text">서버 다운 → <strong>Redis 대기열 (Sorted Set) + Rate Limiting (Bucket4j)</strong>으로 트래픽 흡수. 대기 순번 SSE 실시간 안내.</div>
-      </div>
-      <div class="req-derive-item">
-        <span class="req-dot">결제</span>
-        <div class="req-text">중복 결제·재고 미복구 → <strong>멱등 키 + Saga 보상 트랜잭션 + Outbox 패턴</strong>. 실패 60초 내 자동 복구.</div>
-      </div>
-      <div class="req-derive-item">
-        <span class="req-dot">인증</span>
-        <div class="req-text">매크로 최소화 → <strong>Token Bucket Rate Limiting + 팬 등급 우선권 + 사전 예매 본인인증</strong>.</div>
       </div>
       <div class="req-derive-item">
         <span class="req-dot">재고</span>
         <div class="req-text">재입고 알림 미작동 → <strong>재입고 구독 + Kafka 이벤트 발행</strong>. 오프라인 재고 실시간 연동 API.</div>
       </div>
       <div class="req-derive-item">
-        <span class="req-dot">팬 등급</span>
-        <div class="req-text">충성도 미반영 → <strong>출석 포인트 + 구매 이력 점수 합산 팬 등급</strong>. 등급별 드롭 우선 접근권 부여.</div>
+        <span class="req-dot">결제</span>
+        <div class="req-text">중복 결제·재고 미복구 → <strong>멱등 키 + Saga 보상 트랜잭션 + Outbox 패턴</strong>. 실패 60초 내 자동 복구.</div>
       </div>
       <div class="req-derive-item">
         <span class="req-dot">캘린더</span>
@@ -629,21 +629,17 @@ body {
         <div class="req-text">유입 유도 → 메인 화면 <strong>'이달의 아이돌 뽑기'</strong> 알럿 + 실시간 랭킹. Redis Sorted Set 기반 집계.</div>
       </div>
       <div class="req-derive-item">
-        <span class="req-dot">커뮤니티</span>
-        <div class="req-text">금칙어 관리 → <strong>아티스트별 금칙어 등록 권한</strong>. 신고 누적 시 커뮤니티 접근 차단.</div>
-      </div>
-      <div class="req-derive-item">
-        <span class="req-dot">배송</span>
-        <div class="req-text">해외 배송 실시간 추적 → <strong>MVP 제외</strong>. 국내 배송 기본 상태 조회만 포함.</div>
+        <span class="req-dot">알림</span>
+        <div class="req-text">재입고·결제완료·라이브·커뮤니티 → <strong>발행(도메인 오너)</strong> / <strong>전송(표지민)</strong> 표로 고정. Kafka 필수 아님.</div>
       </div>
     </div>
   </div>
 
 
   <div class="footer">
-    <div class="footer-project">FANDROPS · Backend Portfolio · 5인 팀 · 2025.05.19 – 06.25</div>
+    <div class="footer-project">FANDROPS · Backend Portfolio · 5인 팀 · 2026.05.19 – 06.25</div>
     <div class="footer-nav">
-      ← <a href="#">01 · 서비스 소개</a> &nbsp;&nbsp; → <a href="#">03 · 기획서/KPI·SLO</a>
+      ← <a href="#">01 · 서비스 소개</a> &nbsp;&nbsp; → <a href="#">03 · Not Scope / KPI·SLO</a>
     </div>
   </div>
 
