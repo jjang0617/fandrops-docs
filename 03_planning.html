@@ -34,7 +34,6 @@ body {
   padding: 0 2.5rem 6rem;
 }
 
-/* ── Top bar ── */
 .topbar {
   border-bottom: 1px solid var(--border);
   padding: 1.5rem 0;
@@ -64,7 +63,6 @@ body {
   border-radius: 3px;
 }
 
-/* ── Page title ── */
 .page-title {
   margin-bottom: 4rem;
 }
@@ -90,7 +88,6 @@ body {
   font-weight: 300;
 }
 
-/* ── Section ── */
 .section { margin-bottom: 4rem; }
 
 .section-header {
@@ -125,7 +122,6 @@ body {
 }
 .body-text strong { color: var(--text-primary); font-weight: 500; }
 
-/* ── Not Scope ── */
 .notscope-intro {
   background: var(--bg-subtle);
   border-left: 3px solid var(--text-primary);
@@ -176,6 +172,18 @@ body {
   line-height: 1.55;
 }
 
+.inscope-note {
+  background: #f0f7f4;
+  border: 1px solid #c5e0d3;
+  border-radius: 6px;
+  padding: 1rem 1.5rem;
+  margin-bottom: 1.75rem;
+  font-size: 13.5px;
+  color: var(--text-secondary);
+  line-height: 1.75;
+}
+.inscope-note strong { color: var(--text-primary); }
+
 .tradeoff-box {
   background: var(--bg-dark);
   color: #fff;
@@ -212,7 +220,6 @@ body {
 }
 .tradeoff-list li strong { color: #fff; font-weight: 500; }
 
-/* ── KPI / SLO table ── */
 .kpi-table {
   width: 100%;
   border-collapse: collapse;
@@ -264,7 +271,6 @@ body {
 }
 .kpi-rule strong { color: var(--text-primary); font-weight: 500; }
 
-/* ── Team ── */
 .team-table {
   width: 100%;
   border-collapse: collapse;
@@ -309,9 +315,52 @@ body {
   letter-spacing: 0.03em;
 }
 .team-detail {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+.team-scope {
+  display: block;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  margin-bottom: 0.35rem;
+}
+.team-tagline {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+.team-bullets {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.team-bullets li {
+  position: relative;
+  padding-left: 0.85rem;
+  margin-bottom: 0.3rem;
   font-size: 12.5px;
   color: var(--text-muted);
   line-height: 1.55;
+}
+.team-bullets li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--text-muted);
+}
+.team-bullets li:last-child { margin-bottom: 0; }
+.team-note {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.5;
 }
 
 .collab-box {
@@ -326,7 +375,6 @@ body {
 }
 .collab-box strong { color: var(--text-primary); font-weight: 500; }
 
-/* ── Roadmap ── */
 .roadmap-table {
   width: 100%;
   border-collapse: collapse;
@@ -364,16 +412,7 @@ body {
   color: var(--text-primary);
   white-space: nowrap;
 }
-.week-dot {
-  display: inline-block;
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: var(--text-primary);
-  margin-right: 8px;
-  vertical-align: 2px;
-}
 
-/* ── Arch principles ── */
 .principles-list {
   list-style: none;
   margin: 1.25rem 0;
@@ -402,7 +441,6 @@ body {
   padding-top: 2px;
 }
 
-/* ── Footer ── */
 .footer {
   border-top: 1px solid var(--border);
   padding-top: 2rem;
@@ -443,149 +481,183 @@ body {
   </div>
 
   <div class="page-title">
-    <div class="page-title-eyebrow">Planning Document</div>
-    <h1>Not Scope <span>/ KPI·SLO</span></h1>
+    <h1>Not Scope <span>/ KPI·SLO / Milestone</span></h1>
   </div>
-
 
   <!-- ── 01 · Not Scope ── -->
   <div class="section">
     <div class="section-header">
       <span class="section-num">01</span>
-      <span class="section-title">Not Scope — 의도적으로 안 한 것들</span>
+      <span class="section-title">Not Scope</span>
     </div>
 
     <div class="notscope-intro">
-      이 프로젝트는 <strong>"무엇을 만들었냐"</strong>만큼 <strong>"무엇을 하지 않았냐"</strong>가 중요합니다.<br>
-      아래 항목들은 기술적 역량이 없어서가 아니라, <strong>핵심 정합성 문제에 집중하기 위한 의도적 트레이드오프</strong>입니다.
-      7주라는 제한된 시간 안에 깊이 없이 여러 기능을 나열하는 대신,
-      동시성 제어·분산 트랜잭션·대용량 성능이라는 뼈대에 모든 리소스를 집중했습니다.
+      요구사항 명세서 기준으로, MVP에서 <strong>하지 않는 것</strong>과 <strong>외부로 위임하는 것</strong>을 분리해 둡니다.
+      범위를 줄인 이유는 “기능 나열”이 아니라 <strong>굿즈·핫딜·결제·커뮤니티</strong>에서
+      <strong>정합성·성능·운영 가능성</strong>을 수치로 증명하는 데 집중하기 위함입니다.
     </div>
 
     <div class="notscope-grid">
       <div class="notscope-item">
         <span class="notscope-x">✕</span>
         <div>
+          <div class="notscope-content-title">자체 콘서트·팬미팅 좌석 예매(선점·좌석도·인앱 결제)</div>
+          <div class="notscope-content-why">티켓 실물 좌석·PG 연동은 외부 플랫폼(인터파크 등) 책임. <strong>공지·외부 링크 검증·노출</strong>만 제공.</div>
+        </div>
+      </div>
+      <div class="notscope-item">
+        <span class="notscope-x">✕</span>
+        <div>
+          <div class="notscope-content-title">복수 PG · 인앱 티켓 결제</div>
+          <div class="notscope-content-why"><strong>토스페이먼츠 단일</strong>. 멱등·웹훅·상태 복구에 리소스 집중.</div>
+        </div>
+      </div>
+      <div class="notscope-item">
+        <span class="notscope-x">✕</span>
+        <div>
           <div class="notscope-content-title">실시간 채팅</div>
-          <div class="notscope-content-why">WebSocket 인프라 복잡도가 높고, 핵심 도메인(주문·결제·예약)과 무관. 트래픽 정합성 증명에 집중.</div>
+          <div class="notscope-content-why">WebSocket 스케일·모더레이션 부담. 댓글·알림 중심.</div>
         </div>
       </div>
       <div class="notscope-item">
         <span class="notscope-x">✕</span>
         <div>
-          <div class="notscope-content-title">영상 업로드</div>
-          <div class="notscope-content-why">스토리지·CDN·인코딩 파이프라인은 별도 도메인. 백엔드 트랜잭션 증명과 관련 없음.</div>
+          <div class="notscope-content-title">영상 업로드(자체 호스팅)</div>
+          <div class="notscope-content-why">게시글은 이미지만. 라이브는 유튜브 등 <strong>임베드</strong>로 처리.</div>
         </div>
       </div>
       <div class="notscope-item">
         <span class="notscope-x">✕</span>
         <div>
-          <div class="notscope-content-title">추천 시스템</div>
-          <div class="notscope-content-why">ML 파이프라인·피처 엔지니어링은 별도 전문 영역. 팬덤 커머스의 핵심 기술 과제가 아님.</div>
+          <div class="notscope-content-title">추천 시스템 · Elasticsearch 전문 검색</div>
+          <div class="notscope-content-why">ML·검색 인프라는 별도 도메인. MVP 조회는 캐시·인덱스·커서로 충분.</div>
         </div>
       </div>
       <div class="notscope-item">
         <span class="notscope-x">✕</span>
         <div>
-          <div class="notscope-content-title">완전한 MSA</div>
-          <div class="notscope-content-why">초기부터 MSA는 운영 복잡도만 높임. 모듈러 모놀리스로 도메인 경계를 증명하고, 필요 시 점진 분리.</div>
+          <div class="notscope-content-title">Day-1 완전한 MSA</div>
+          <div class="notscope-content-why">모듈러(멀티모듈) 모놀리스로 경계·의존성 증명 후, 필요 시 점진 분리.</div>
         </div>
       </div>
       <div class="notscope-item">
         <span class="notscope-x">✕</span>
         <div>
-          <div class="notscope-content-title">모바일 앱</div>
-          <div class="notscope-content-why">백엔드 포트폴리오 프로젝트. API 설계와 성능 증명이 목적이며, 클라이언트 구현은 범위 외.</div>
+          <div class="notscope-content-title">네이티브 모바일 앱</div>
+          <div class="notscope-content-why">백엔드·API·관측·부하 검증이 목표. 클라이언트는 웹 FE 연동 수준.</div>
         </div>
       </div>
       <div class="notscope-item">
         <span class="notscope-x">✕</span>
         <div>
-          <div class="notscope-content-title">글로벌 다국어 / 다중 결제수단</div>
-          <div class="notscope-content-why">MVP 범위 외. 단일 결제 API(토스페이먼츠) 연동으로 멱등성·Saga 패턴을 깊게 증명하는 데 집중.</div>
+          <div class="notscope-content-title">오프라인 재고 ERP 급 실시간 연동(F04-05)</div>
+          <div class="notscope-content-why">명세상 Phase2·운영 복잡도 높음. MVP는 온라인 재고·품절·알림 중심.</div>
         </div>
       </div>
     </div>
 
-    <div class="tradeoff-box">
-      <div class="tradeoff-box-label">우리의 입장</div>
+    <div class="tradeoff-box">	
       <ul class="tradeoff-list">
-        <li>위 항목들은 <strong>기술적 역량 부족이 아닌, 의도적 트레이드오프</strong>다.</li>
-        <li>우리는 <strong>핵심 정합성 문제 — 동시성·분산 트랜잭션·대용량 성능</strong>에 집중했다.</li>
-        <li>기능의 수가 아니라, <strong>하나의 문제를 얼마나 깊이 파고들었는지</strong>로 평가받는다.</li>
-        <li>추가 기능보다 <strong>장애 복구 가능성과 측정 가능한 수치</strong>를 우선했다.</li>
+        <li><strong>티켓은 팔지 않고 연결한다</strong> — 정합성 범위를 명확히, 현실적인 타협.</li>
+        <li><strong>결제는 단일 PG로 깊게</strong> — 멱등·웹훅·실패 복구에 집중.</li>
+        <li><strong>핫딜·재고·주문</strong>이 동시성 스토리의 중심축.</li>
+        <li>문서·수치·장애 대응이 “기능 개수”보다 우선.</li>
       </ul>
-    </div>
   </div>
 
-
+<br>
+<br>
   <!-- ── 02 · KPI / SLO ── -->
   <div class="section">
     <div class="section-header">
       <span class="section-num">02</span>
-      <span class="section-title">KPI / SLO — 성공 기준</span>
+      <span class="section-title">KPI / SLO — 목표 기준</span>
     </div>
 
-    <p class="body-text">
-      아래 5개 지표가 이 프로젝트의 <strong>합격 기준</strong>입니다.
-      기능 구현보다 이 수치 달성이 우선이며, 하나라도 미달이면 기능 추가 전에 원인 해결을 먼저 합니다.
-    </p>
+    <table class="kpi-table">
+      <thead>
+        <tr>
+          <th style="width: 140px;">부하 가정 (MVP 합의)</th>
+          <th>목표</th>
+          <th>비고</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>핫딜 오픈 순간</td>
+          <td>동시 <strong>~1,000/~10000</strong> 요청 급증 시나리오 (k6 스파이크)</td>
+          <td>대기열(F08-01) + 오버셀 0 검증</td>
+        </tr>
+        <tr>
+          <td>상품·상점 Read</td>
+          <td><strong>~300 RPS</strong> 구간에서 Read SLO 유지</td>
+          <td>목록·상세·캐시 히트 전제 명시</td>
+        </tr>
+        <tr>
+          <td>주문 생성</td>
+          <td><strong>~100 TPS</strong> 구간에서 Write P95 목표</td>
+          <td>합의치 조정 시 문서 버전 갱신</td>
+        </tr>
+      </tbody>
+    </table>
 
     <table class="kpi-table">
       <thead>
         <tr>
           <th style="width: 110px;">구분</th>
-          <th>SLO (합격 기준)</th>
+          <th>SLO (목표 기준)</th>
           <th>측정 방법</th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td>정합성</td>
-          <td>오버셀·중복 예약·중복 결제 <code>0건</code></td>
-          <td>부하 후 DB·이벤트 로그 검증</td>
+          <td>핫딜·상시 상품 <strong>오버셀</strong>·<strong>중복 주문 확정</strong>·<strong>중복 결제</strong> <code>0건</code></td>
+          <td>부하 후 DB·주문·결제 로그 교차 검증</td>
         </tr>
         <tr>
           <td>결제 복구</td>
-          <td>결제 실패 건 <code>100%</code>가 <code>60초 내</code> 보상(재고·상태) 완료</td>
-          <td>웹훅·Outbox·보상 이벤트 대조</td>
+          <td>결제 실패·웹훅 지연 시나리오에서 주문/재고 상태가 <code>60초 내</code> 일관 상태로 수렴 (팀 합의 기준: 자동 또는 수동 복구 절차 문서화)</td>
+          <td>웹훅 재전송·멱등키·수동 리컨실리에이션 로그</td>
         </tr>
         <tr>
           <td>Write 성능</td>
-          <td>주문/예약/결제 <code>P95 &lt; 300ms</code><br><span style="font-size:12px; color: var(--text-muted);">(합의한 목표 TPS 기준)</span></td>
+          <td><strong>주문·결제·핫딜 쓰기</strong> <code>P95 &lt; 300ms</code><br></td>
+          <td>k6 + Grafana</td>
+        </tr>
+        <tr>
+          <td>Read 성능</td>
+          <td>피드·랭킹·행사 등 Read <code>P95 &lt; 80~120ms</code>, <strong>상품 조회</strong>는 <code>~300 RPS</code> 전제와 함께 기록<br></td>
           <td>k6 + Grafana</td>
         </tr>
         <tr>
           <td>안정성</td>
           <td><code>5xx &lt; 0.1%</code>, 타임아웃 임계 이하</td>
-          <td>로그 / APM 집계</td>
+          <td>로그 / APM</td>
         </tr>
         <tr>
           <td>공정성·방어</td>
-          <td>Rate limit 위반 요청 <code>429</code> 처리<br>대기열 처리량 목표 달성</td>
-          <td>차단 로그·대기열 depth</td>
+          <td>Rate limit 위반 <code>429</code> / 핫딜·오픈 구간 <strong>대기열·Depth</strong> 목표</td>
+          <td>차단 로그·큐 depth·대기 시간 분포</td>
         </tr>
       </tbody>
     </table>
 
     <div class="kpi-rule">
-      <strong>팀 규칙:</strong> 위 5개 중 하나라도 미달이면 기능 추가보다 원인 해결·튜닝을 우선한다.
-      "동작한다"와 "수치를 증명한다"는 다르다. 모든 핵심 선택은 근거와 실험 결과를 남긴다.
+      <strong>팀 규칙:</strong> 핵심 SLO 미달 시 기능 추가보다 원인·튜닝·계약 수정을 우선한다.
+      “동작”이 아니라 <strong>측정·재현·개선 수치</strong>를 남긴다.
     </div>
   </div>
-
 
   <!-- ── 03 · 팀 구성 ── -->
   <div class="section">
     <div class="section-header">
       <span class="section-num">03</span>
-      <span class="section-title">팀 구성 — 도메인 오너십</span>
+      <span class="section-title">팀 구성 — Domain Ownership</span>
     </div>
 
     <p class="body-text">
-      단순 역할 분배가 아닌 <strong>도메인 오너십</strong> 형태로 운영합니다.
-      각 오너는 코드 + 테스트 + 측정 지표 + STAR 트러블슈팅을 같은 도메인 산출물로 관리합니다.
-      도메인 경계는 <strong>"어떤 요청이 DB를 쓰는가"</strong>를 기준으로 나눴습니다.
+      각 오너는 코드 + 테스트 + 지표 + STAR를 한 덩어리로 관리합니다.<br>
     </p>
 
     <table class="team-table">
@@ -602,8 +674,13 @@ body {
           <td><div class="domain-badge">Platform / SRE / Observability</div></td>
           <td>
             <div class="team-detail">
-              AWS (VPC·EC2·RDS·ElastiCache) · Nginx · GitHub Actions · Prometheus/Grafana · k6 부하 테스트 · 무중단 배포·롤백 · 병목 리포트
-              <br>공용 Redis 운영 · 관리자 모니터링 대시보드
+              <span class="team-scope">[F08-02]</span>
+              <span class="team-tagline">플랫폼·관측·부하</span>
+              <ul class="team-bullets">
+                <li>AWS · Nginx · GitHub Actions · Prometheus/Grafana</li>
+                <li>k6 부하 테스트 · 무중단 배포·롤백</li>
+                <li>공용 Redis 운영 · 관리자 모니터링 대시보드</li>
+              </ul>		
             </div>
           </td>
         </tr>
@@ -612,294 +689,304 @@ body {
           <td><div class="domain-badge">Identity / Security / Communication</div></td>
           <td>
             <div class="team-detail">
-              JWT · OAuth · 인가 · Rate Limiting · OTP / SMS 인증
-              <br>알림 전송 실행 (재입고·라이브 시작·결제 완료 등)
-              <br>Admin 입점 심사·승인 플로우
+              <span class="team-scope">[F01-01~03, F02-01~02, F04-03, F08-01]</span>
+              <span class="team-tagline">신뢰·인증·알림 채널</span>
+              <ul class="team-bullets">
+                <li>이메일·소셜 가입 · JWT·인가 · Rate Limiting</li>
+                <li>핫딜 대기열·레이트리밋</li>
+                <li>알림 <strong>전송</strong> — 발행·페이로드는 <strong>알림 이벤트 표</strong></li>
+                <li>입점 신청 · Admin 심사·승인 · <strong>승인 시 이벤트 발행</strong> (공간 생성 소비는 정환철)</li>
+                <li>배너 Admin <strong>CRUD</strong> (노출 정책·쿼리는 정환철)</li>
+              </ul>
             </div>
           </td>
         </tr>
         <tr>
           <td>정환철</td>
-          <td><div class="domain-badge">Product / Community Read</div></td>
+          <td><div class="domain-badge">Community / Content</div></td>
           <td>
             <div class="team-detail">
-              상품·배너·피드·캘린더·랭킹 조회(이달의 아이돌) API
-              <br>커서 기반 페이징
-              <br>Redis 캐시·스탬피드 방어 (Single Flight / TTL Jitter) · N+1·쿼리 최적화
-              <br>AI 번역 요청·캐시 프록시
+              <span class="team-scope">[F03-01~07, F05-01~03, F02-03 Read, F04-03 노출, F07-01]</span>
+              <span class="team-tagline">커뮤니티·행사·콘텐츠 — 피드·댓글·일정·랭킹·라이브</span>
+              <ul class="team-bullets">
+                <li>승인 이벤트 소비 → 공간·탭 생성 (실패 시 재시도·DLQ/failed_row·리컨실)</li>
+                <li>게시글 작성·조회 · 댓글·하트·정책·도배</li>
+                <li>일정 · 랭킹 · 라이브 URL·임베드</li>
+                <li>행사·외부 티켓 링크 등록·검증·노출 (F05-02 Admin 보정은 표지민)</li>
+                <li>프로필·SNS 팬 Read · 배너 노출 정책·메인 Read</li>
+                <li>마이페이지 활동 <strong>집계/BFF 오너</strong> (형성빈·장성재 내부 API 조립)</li>
+                <li>피드·랭킹·행사 캐시 · 커서 페이징 · N+1</li>
+              </ul>
             </div>
           </td>
         </tr>
         <tr>
           <td>형성빈</td>
-          <td><div class="domain-badge">Reservation / Concurrency</div></td>
+          <td><div class="domain-badge">Commerce / Order / Inventory</div></td>
           <td>
             <div class="team-detail">
-              주문 생성 · 좌석 선점·임시점유·재고 레이스 컨디션 제어
-              <br>팬 가입(+1) 및 팬 수 집계 동시성
-              <br><strong>댓글·하트 API (조회·저장 통합)</strong> · 금칙어·신고 누적 제재 · 도배 방어
-              <br>낙관적·비관적·Redisson 분산 락 비교 구현 · 동시성 정합성 테스트
+              <span class="team-scope">[F04-01~04, F04-06, F01-04, F02-03, F07-02]</span>
+              <span class="team-tagline">상품·스토어·주문 축 — DTO·Read·Write 동일 오너</span>
+              <ul class="team-bullets">
+                <li>상품 CRUD / 목록·상세·스토어 Read</li>
+                <li>핫딜 재고·선착순 동시성</li>
+                <li>장바구니·주문 (저장소 RDBvsRedis 선택 Phase1 확정)</li>
+                <li>재입고 이벤트 발행</li>
+                <li>팬 가입(+1)</li>
+                <li>아티스트 프로필 편집</li>
+                <li>주문 내역 (결제·PG 상태는 장성재)</li>
+              </ul>
             </div>
           </td>
         </tr>
         <tr>
           <td>장성재</td>
-          <td><div class="domain-badge">Payment / Eventing</div></td>
+          <td><div class="domain-badge">Payment / Integration</div></td>
           <td>
             <div class="team-detail">
-              PG 연동·웹훅·멱등 키·Outbox·Kafka·Saga 보상 트랜잭션
-              <br>주문·결제 상태 이벤트 발행
-              <br><strong>도메인 이벤트 계약 관리</strong> — 결제완료/실패·재입고 알림 요청 등
-              주문·결제 흐름에서 발생하는 이벤트의 토픽·메시지 스키마·소비 파이프라인 단일 오너
-              <br><span style="color: var(--text-muted); font-size: 12px;">※ 메모: 라이브 시작 등 이벤트 발생 주체가 Artist/System인 경우, Payment/Eventing 도메인은 이벤트 계약·버스·소비 파이프라인의 오너로서 해당 이벤트가 버스에 올라온 이후를 관리한다.</span>
+              <span class="team-scope">[F06-01~05, F07-02 결제]</span>
+              <span class="team-tagline">결제·PG·E2E — 웹훅 이후 정합성 단일 구현 오너</span>
+              <ul class="team-bullets">
+                <li>토스페이먼츠 · 웹훅 · 멱등 · 상태/재시도</li>
+                <li>E2E(주문~결제~알림) · 웹훅 후 주문·재고·보상</li>
+                <li>마이페이지 결제·PG 상태 조회</li>
+                <li><strong>E2E Sync 오너</strong> — 장바구니→결제→이벤트 발행→표지민 전송</li>
+              </ul>
+              <span class="team-note">형성빈(주문)·표지민(채널)과 계약 동기화. 이벤트 버스는 MVP에서 DB/큐/스케줄러 대체 가능.</span>
             </div>
           </td>
         </tr>
       </tbody>
     </table>
 
-    <div class="collab-box" style="margin-top: 1.25rem;">
-      <strong>협업 원칙</strong> — PR 머지 전 도메인 오너 리뷰 필수 / API 계약 변경 시 OpenAPI·에러코드 문서 동시 수정 /
-      장애 발생 시 해당 도메인 오너 + 지영재 동시 1차 대응 / KPI 미달 시 오너가 원인 분석 리포트 제출 /
-      이벤트 스키마 변경은 장성재 승인 후 진행
+
+    <p class="body-text" style="font-size: 13.5px; margin-bottom: 0.5rem;"><strong>알림 이벤트</strong> — 이벤트 타입별 <strong>페이로드(발행)</strong> 소유자와 <strong>전송</strong> 담당.</p>
+    <table class="team-table" style="margin-top: 0; margin-bottom: 1.5rem;">
+      <thead>
+        <tr>
+          <th>이벤트(예시)</th>
+          <th style="width: 88px;">발행·페이로드</th>
+          <th style="width: 72px;">전송</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>재입고 (F04-06)</td>
+          <td><strong>형성빈</strong></td>
+          <td><strong>표지민</strong></td>
+        </tr>
+        <tr>
+          <td>결제 완료 (F06 → F03-04)</td>
+          <td><strong>장성재</strong></td>
+          <td><strong>표지민</strong></td>
+        </tr>
+        <tr>
+          <td>라이브 오픈·시작 알림 (F03-07)</td>
+          <td><strong>정환철</strong></td>
+          <td><strong>표지민</strong></td>
+        </tr>
+        <tr>
+          <td>새 글·댓글 답글 등 (F03-04)</td>
+          <td><strong>정환철</strong></td>
+          <td><strong>표지민</strong></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="collab-box">
+      <strong>협업 원칙</strong> — PR 머지 전 도메인 오너 리뷰 / API·에러코드·이벤트 페이로드 변경은 문서 동시 수정 /
+      장애 1차: 해당 오너 + 지영재 / KPI 미달 시 오너가 원인 분석 리포트
     </div>
   </div>
 
-
-  <!-- ── 04 · 로드맵 ── -->
+  <!-- ── 04 · 로드맵 (명세·Not Scope에 맞게 정리) ── -->
   <div class="section">
     <div class="section-header">
       <span class="section-num">04</span>
-      <span class="section-title">개발 로드맵 — 병렬 마일스톤 (5.19 – 6.25)</span>
+      <span class="section-title">개발 로드맵 — 5.19 – 6.25</span>
     </div>
 
-    <p class="body-text">
-      5개 도메인이 <strong>병렬로 동시 진행</strong>합니다. Phase는 전체 팀의 동기화 기준점이며,
-      각 도메인 오너는 해당 Phase 목표를 독립적으로 수행합니다.
-      부하 테스트는 단순 마감 작업이 아닌 <strong>핵심 검증 단계</strong>로, 전용 Phase를 배정했습니다.
-    </p>
-
-    <!-- Phase 1 -->
     <div style="margin: 2rem 0 0.5rem;">
       <div style="font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.75rem;">
-        Phase 1 &nbsp;·&nbsp; 5.19 – 5.25 &nbsp;·&nbsp; 설계 확정 & 환경 세팅 (전원 참여)
+        Phase 1 · 5.19 – 5.20 · 설계·환경
       </div>
       <table class="roadmap-table" style="margin: 0;">
         <thead><tr><th style="width: 120px;">담당자</th><th>목표</th></tr></thead>
         <tbody>
           <tr>
-            <td>지영재<br><span style="font-size:11px;color:var(--text-muted);">Platform/SRE</span></td>
-            <td>AWS 환경 프로비저닝 (VPC·EC2·RDS·ElastiCache·MSK), GitHub Actions CI/CD 파이프라인 구축, Prometheus·Grafana 기반 모니터링 세팅, 공용 Redis 클러스터 구성</td>
+            <td>지영재</td>
+            <td>AWS(VPC·EC2·RDS·ElastiCache) · GitHub Actions · Prometheus/Grafana · 스테이징 분리 · 공용 Redis</td>
           </tr>
           <tr>
-            <td>표지민<br><span style="font-size:11px;color:var(--text-muted);">Identity/Security</span></td>
-            <td>JWT 토큰 구조·갱신 정책 설계, OTP/SMS 인증 플로우 설계, Admin 입점 심사 플로우 초안, Rate Limiting 정책 문서화</td>
+            <td>표지민</td>
+            <td>JWT·소셜·인가 · RateLimit 설계 · Admin 심사 플로 · 승인 <strong>도메인 이벤트</strong> 스키마 · 배너(Admin) 데이터 모델</td>
           </tr>
           <tr>
-            <td>정환철<br><span style="font-size:11px;color:var(--text-muted);">Product/Read</span></td>
-            <td>상품·배너·피드·캘린더 ERD 설계, 캐시 전략 설계 (TTL·스탬피드 방어 방식 결정), 커서 페이징 공통 스펙 정의</td>
+            <td>정환철</td>
+            <td>피드·댓글·일정·행사·랭킹·라이브 ERD · 공간 생성 <strong>실패·리컨실</strong> 초안 · 배너 노출 쿼리 · 캐시·커서 · 댓글 정책 초안</td>
+          </tr>
+          <tr>	
+            <td>형성빈</td>
+            <td>상품 ERD · 목록·상세·DTO · 장바구니 <strong>RDBvsRedis 확정</strong> · 주문·핫딜 재고 · 팬 가입 · 아티스트 프로필 편집</td>
           </tr>
           <tr>
-            <td>형성빈<br><span style="font-size:11px;color:var(--text-muted);">Reservation/Concurrency</span></td>
-            <td>주문·좌석·재고 ERD 설계, 동시성 제어 전략 선택지 정리 (낙관·비관·분산 락 비교표), 금칙어·신고 정책 규칙 문서화</td>
-          </tr>
-          <tr>
-            <td>장성재<br><span style="font-size:11px;color:var(--text-muted);">Payment/Eventing</span></td>
-            <td>결제 ERD 설계, Kafka 토픽·메시지 스키마 초안 (이벤트 계약 v0), Outbox 테이블 설계, PG 연동 방식 결정 (토스페이먼츠)</td>
+            <td>장성재</td>
+            <td>결제·주문 상태 ERD · 토스 웹훅·멱등 · 결제·보상 시퀀스(형성빈과 스키마 합의)</td>
           </tr>
           <tr>
             <td>전원</td>
-            <td>Bounded Context 최종 확정, API 공통 응답·에러코드·traceId·JWT 헤더 스펙 합의, 브랜치·PR·머지 규칙 합의, OpenAPI(Swagger) 문서 기본 틀 세팅</td>
+            <td>Bounded Context 확정 · API 공통 응답·에러코드·traceId · OpenAPI 틀 · API Mock 계약 동결 · 브랜치/PR 규칙</td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <!-- Phase 2 -->
     <div style="margin: 2rem 0 0.5rem;">
       <div style="font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.75rem;">
-        Phase 2 &nbsp;·&nbsp; 5.26 – 6.08 &nbsp;·&nbsp; 코어 API 병렬 개발 (2주, 도메인별 독립 진행)
+        Phase 2 · 5.20 – 6.02 · 코어 API
       </div>
       <table class="roadmap-table" style="margin: 0;">
         <thead><tr><th style="width: 120px;">담당자</th><th>목표</th></tr></thead>
         <tbody>
           <tr>
-            <td>지영재<br><span style="font-size:11px;color:var(--text-muted);">Platform/SRE</span></td>
-            <td>FE 빌드·배포 파이프라인 구성 (S3+CloudFront), Nginx 리버스 프록시·SSL 설정, 스테이징 환경 분리, k6 기본 스크립트 초안 작성</td>
+            <td>지영재</td>
+            <td>Nginx·SSL · FE 배포 파이프라인(선택) · k6 스크립트 초안 · 로그 수집 구조 · TraceId · Grafana 대시보드 초안 · Prometheus exporter 연결</td>
           </tr>
           <tr>
-            <td>표지민<br><span style="font-size:11px;color:var(--text-muted);">Identity/Security</span></td>
-            <td>JWT 발급·갱신·인가 구현, Refresh Token Rotation 적용, Redis + Bucket4j Rate Limiting 구현, OTP/SMS 인증 API 구현, Admin 입점 심사 API 구현, 단위 테스트 작성</td>
+            <td>표지민</td>
+            <td>Auth 전체 · Bucket4j · Admin 심사 API · 배너 Admin API · 알림 발송 어댑터 1차</td>
           </tr>
           <tr>
-            <td>정환철<br><span style="font-size:11px;color:var(--text-muted);">Product/Read</span></td>
-            <td>상품·배너·피드 조회 API (커서 페이징), 아티스트 캘린더 조회 API, 랭킹 조회 API, Redis 캐시 1차 적용, N+1 문제 식별 및 Fetch Join / BatchSize 1차 해결</td>
+            <td>정환철</td>
+            <td>공간 생성 소비 · 배너 노출 · 피드·댓글·일정·라이브·행사 API · Redis 캐시 · N+1 1차</td>
           </tr>
           <tr>
-            <td>형성빈<br><span style="font-size:11px;color:var(--text-muted);">Reservation/Concurrency</span></td>
-            <td>주문 생성 API, 좌석 선점·임시점유 API, 재고 차감 로직 구현, 낙관적·비관적 락 1차 구현, 동시성 테스트 코드로 레이스 컨디션 재현, 팬 가입(+1) 집계 로직, 댓글·하트 조회·저장 API 기본 구현</td>
+            <td>형성빈</td>
+            <td>상품 CRUD·목록·상세 Read · 장바구니·주문 · 핫딜 동시성 1차 · 팬 가입 · 프로필 편집 · 재입고·이벤트 발행</td>
           </tr>
           <tr>
-            <td>장성재<br><span style="font-size:11px;color:var(--text-muted);">Payment/Eventing</span></td>
-            <td>PG 연동·웹훅 수신 구현, 멱등 키 구현, Outbox 테이블 기록 로직, Kafka Producer 구현 (결제완료·결제실패 이벤트), 이벤트 스키마 v1 확정 후 팀 공유</td>
+            <td>장성재</td>
+            <td>토스 결제·웹훅 · 멱등 · 주문-결제 연동 · E2E·보상 본격화 · <strong>장바구니→결제→알림 Sync</strong>(형성빈·표지민)</td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <!-- Phase 3 -->
     <div style="margin: 2rem 0 0.5rem;">
       <div style="font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.75rem;">
-        Phase 3 &nbsp;·&nbsp; 6.09 – 6.15 &nbsp;·&nbsp; 고도화 & FE 연동
+        Phase 3 · 6.02 – 6.12 · 고도화 &amp; FE 연동
       </div>
       <table class="roadmap-table" style="margin: 0;">
         <thead><tr><th style="width: 120px;">담당자</th><th>목표</th></tr></thead>
         <tbody>
           <tr>
-            <td>지영재<br><span style="font-size:11px;color:var(--text-muted);">Platform/SRE</span></td>
-            <td>통합 테스트 환경 구성, Grafana 대시보드 1차 완성 (TPS·P95·5xx·DB커넥션·GC·Kafka Lag 패널), k6 Baseline 시나리오 실행 및 초기 수치 측정</td>
+            <td>지영재</td>
+            <td>통합 환경 점검 · Grafana 패널( P95·5xx·Redis·DB ) · Baseline k6 1회</td>
           </tr>
           <tr>
-            <td>표지민<br><span style="font-size:11px;color:var(--text-muted);">Identity/Security</span></td>
-            <td>Redis 대기열 시스템 구현 (Sorted Set, 대기 순번 SSE 안내), Rate Limiting 고도화 (IP·사용자 식별자 이중 방어), FE 로그인·토큰 갱신·대기열 흐름 연동, 알림 전송 채널 구현 (재입고·결제완료)</td>
+            <td>표지민</td>
+            <td>핫딜 대기열(Sorted Set)·SSE/폴링 순번 · 수신 이벤트→알림 전송 연동(표 참조) · RateLimit 고도화</td>
           </tr>
           <tr>
-            <td>정환철<br><span style="font-size:11px;color:var(--text-muted);">Product/Read</span></td>
-            <td>캐시 스탬피드 방어 구현 (Single Flight · TTL Jitter), EXPLAIN 기반 쿼리 튜닝·인덱스 최적화, AI 번역 요청·캐시 프록시 구현, FE 상품·피드·캘린더·랭킹 조회 화면 연동, 랭킹 Redis Sorted Set 집계 최적화</td>
+            <td>정환철</td>
+            <td>스탬피드 방어 · EXPLAIN/인덱스 · FE 피드·행사·일정·댓글 · 랭킹 · 마이페이지 활동 <strong>집계/BFF</strong> · 댓글 정책 고도화</td>
           </tr>
           <tr>
-            <td>형성빈<br><span style="font-size:11px;color:var(--text-muted);">Reservation/Concurrency</span></td>
-            <td>Redisson 분산 락 전환 및 락 전략 3종 성능 비교 수치화, 댓글·하트 정책 고도화 (도배 방어·속도 제한·금칙어 검사), 신고 누적 제재 API 구현, 댓글 조회 커서 페이징 적용, FE 예약·주문·댓글 플로우 연동</td>
+            <td>형성빈</td>
+            <td>Redisson 락 비교 · 주문-재고 경계 · FE 상점·장바구니·주문서</td>
           </tr>
           <tr>
-            <td>장성재<br><span style="font-size:11px;color:var(--text-muted);">Payment/Eventing</span></td>
-            <td>Saga 보상 트랜잭션 완성 (결제실패 → 주문취소 → 재고복구), Kafka Consumer 구현 (재입고 알림 요청 이벤트 → 표지민 채널로 전달), Outbox Relay 스케줄러 구현, FE 결제 페이지 연동</td>
+            <td>장성재</td>
+            <td>결제 실패·취소 시 주문/재고 복구 · 웹훅·멱등 재현 · FE 결제 연동 · Outbox/내부 큐</td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <!-- Phase 4 -->
     <div style="margin: 2rem 0 0.5rem;">
-      <div style="font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 8px;">
-        Phase 4 &nbsp;·&nbsp; 6.16 – 6.22 &nbsp;·&nbsp; 부하 테스트 & 병목 튜닝
-        <span style="background: var(--bg-dark); color: #fff; font-size: 10px; padding: 2px 8px; border-radius: 3px; letter-spacing: 0.05em;">핵심 검증 단계</span>
+      <div style="font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.75rem;">
+        Phase 4 · 6.12 – 6.22 · 부하·튜닝 (핵심 검증)
       </div>
       <table class="roadmap-table" style="margin: 0;">
         <thead><tr><th style="width: 120px;">담당자</th><th>검증 목표</th></tr></thead>
         <tbody>
           <tr>
-            <td>지영재<br><span style="font-size:11px;color:var(--text-muted);">Platform/SRE</span></td>
-            <td>k6 Baseline → Stress → Spike 3단계 순차 실행, Grafana로 CPU·메모리·DB 커넥션·JVM GC·Kafka Consumer Lag·대기열 Depth 병목 시각화, 도메인별 개선 지점 리포팅, HikariCP 커넥션 풀 튜닝</td>
+            <td>지영재</td>
+            <td>Baseline→Stress→Spike · 병목 리포트 · 커넥션 풀·Redis·CPU</td>
           </tr>
           <tr>
-            <td>표지민<br><span style="font-size:11px;color:var(--text-muted);">Identity/Security</span></td>
-            <td>Rate Limiting 임계점 검증 (429 즉시 반환, 시스템 내부 미진입 확인), 대기열 Depth 목표 달성 여부 측정, 매크로 봇 시나리오 재현 및 차단율 수치화, SSE 대기 순번 안내 정확성 검증</td>
+            <td>표지민</td>
+            <td>429·대기열 depth·매크로 유사 시나리오 차단율</td>
           </tr>
           <tr>
-            <td>정환철<br><span style="font-size:11px;color:var(--text-muted);">Product/Read</span></td>
-            <td>상품·피드 Read P95 &lt; 50ms 달성 검증 (캐시 히트 기준), 캐시 OFF 시 스탬피드 재현 → 방어 로직 적용 전후 TPS 비교표 작성, 인덱스 카디널리티 분석 (옵티마이저 Full Scan 선택 케이스 문서화), AI 번역 캐시 히트율 측정</td>
+            <td>정환철</td>
+            <td>Read P95 목표 · 캐시 OFF 스탬피드 전후 비교 · <strong>댓글 도배 방어</strong> 검증</td>
           </tr>
           <tr>
-            <td>형성빈<br><span style="font-size:11px;color:var(--text-muted);">Reservation/Concurrency</span></td>
-            <td>동시 1만 요청 시 오버셀 0건 검증, 락 전략 3종(낙관·비관·Redisson) TPS·지연시간·에러율 비교표 작성, 데드락 재현 → 쿼리 접근 순서 재배치로 해결 문서화, 팬 수 집계 동시성 정합성 검증, 댓글 동시 저장 시 도배 방어 동작 검증</td>
+            <td>형성빈</td>
+            <td>핫딜 동시 ~1k 급증 시 <strong>오버셀 0</strong> · 락 전략 비교표 · 상품 Read <strong>~300 RPS</strong> 구간 재현</td>
           </tr>
           <tr>
-            <td>장성재<br><span style="font-size:11px;color:var(--text-muted);">Payment/Eventing</span></td>
-            <td>결제 실패 → 60초 내 보상 완료 100% 검증, Outbox 메시지 유실 0건 확인 (Kafka 재시작 후 재발행 검증), Write P95 &lt; 300ms 달성, 멱등 키 중복 결제 차단 시나리오 재현</td>
+            <td>장성재</td>
+            <td>결제 실패 복구 SLA · 웹훅·재고·주문 수렴 · 멱등·중복 웹훅 · Write P95 <strong>(주문 ~100 TPS)</strong></td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <!-- Phase 5 -->
     <div style="margin: 2rem 0 0.5rem;">
       <div style="font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.75rem;">
-        Phase 5 &nbsp;·&nbsp; 6.23 – 6.25 &nbsp;·&nbsp; 마무리 & 포트폴리오 마감
+        Phase 5 · 6.22 – 6.25 · 마감
       </div>
       <table class="roadmap-table" style="margin: 0;">
-        <thead><tr><th style="width: 120px;">담당자</th><th>마감 작업</th></tr></thead>
+        <thead><tr><th style="width: 120px;">담당자</th><th>마감</th></tr></thead>
         <tbody>
           <tr>
-            <td>지영재<br><span style="font-size:11px;color:var(--text-muted);">Platform/SRE</span></td>
-            <td>Blue-Green 무중단 배포 최종 검증 (배포 중 k6 트래픽 주입, 502/504 0건 확인), Grafana 대시보드 최종 스크린샷 정리, 부하 테스트 결과 종합 보고서 작성, 롤백 시나리오 검증</td>
-          </tr>
-          <tr>
-            <td>표지민<br><span style="font-size:11px;color:var(--text-muted);">Identity/Security</span></td>
-            <td>STAR 트러블슈팅 리포트 작성 (Rate Limiting 또는 대기열 관련 1건 이상), OpenAPI 문서 최종 정리, Admin 기능 최종 검수</td>
-          </tr>
-          <tr>
-            <td>정환철<br><span style="font-size:11px;color:var(--text-muted);">Product/Read</span></td>
-            <td>STAR 트러블슈팅 리포트 작성 (N+1·캐시 스탬피드·인덱스 중 1건 이상), 쿼리 최적화 전후 EXPLAIN 캡처 정리, 상품·피드·랭킹 조회 OpenAPI 최종 정리</td>
-          </tr>
-          <tr>
-            <td>형성빈<br><span style="font-size:11px;color:var(--text-muted);">Reservation/Concurrency</span></td>
-            <td>STAR 트러블슈팅 리포트 작성 (데드락·레이스컨디션·댓글 도배 방어 중 1건 이상), 락 전략 비교 실험 보고서 완성, 동시성 테스트 코드 정리, 댓글·하트 API OpenAPI 최종 정리</td>
-          </tr>
-          <tr>
-            <td>장성재<br><span style="font-size:11px;color:var(--text-muted);">Payment/Eventing</span></td>
-            <td>STAR 트러블슈팅 리포트 작성 (Saga·Outbox·멱등성 관련 1건 이상), 이벤트 계약 문서 최종 정리 (토픽·스키마·소비 파이프라인), 결제 시퀀스 다이어그램 최종 검수</td>
-          </tr>
-          <tr>
             <td>전원</td>
-            <td>README·Notion 문서 최종 정리, GitHub Pages 문서 사이트 배포, 포트폴리오 최종 마감</td>
+            <td>STAR 리포트 · README/Notion · 데모(온보딩→핫딜→결제·외부 티켓·알림) · OpenAPI 확정</td>
+          </tr>
+          <tr>
+            <td>지영재</td>
+            <td>대시보드 스크린샷 · 부하 결과 종합 · 롤백 검증</td>
+          </tr>
+          <tr>
+            <td>표지민</td>
+            <td>Auth·대기열·알림 OpenAPI · Admin·배너 문서</td>
+          </tr>
+          <tr>
+            <td>정환철</td>
+            <td>Read·캐시 STAR · 커뮤니티·행사 API 문서</td>
+          </tr>
+          <tr>
+            <td>형성빈</td>
+            <td>핫딜·락 전략 보고서 · 상품·주문 API 문서</td>
+          </tr>
+          <tr>
+            <td>장성재</td>
+            <td>결제·E2E·멱등 STAR · 결제 시퀀스 다이어그램</td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <div style="margin-top: 1.5rem; background: var(--bg-subtle); border: 1px solid var(--border); border-radius: 6px; padding: 1rem 1.5rem; font-size: 13.5px; color: var(--text-secondary); line-height: 1.7;">
-      <strong style="color: var(--text-primary);">병렬 진행 원칙</strong> —
-      각 도메인 오너는 Phase 내에서 독립적으로 진행하되, <strong>매주 월요일 전체 Sync</strong>에서
-      API 계약 변경사항·블로커·KPI 달성 현황을 공유합니다.
-      이벤트 스키마 변경은 장성재 승인 후 진행. API 계약 변경 시 OpenAPI/Swagger 및 공통 에러코드 동시 수정 필수.
-      Phase 4 부하 테스트 결과가 KPI 미달이면 Phase 5 일정을 조정하고 튜닝을 연장합니다.
-    </div>
   </div>
 
-
-  <!-- ── 05 · 아키텍처 원칙 ── -->
+  <!-- ── 05 · 원칙 ── -->
   <div class="section">
     <div class="section-header">
       <span class="section-num">05</span>
-      <span class="section-title">아키텍처 원칙 (Engineering Principles)</span>
+      <span class="section-title">아키텍처 원칙</span>
     </div>
-
     <ul class="principles-list">
-      <li>
-        <span class="p-num">01</span>
-        <span>기능보다 <strong>정합성</strong>을 우선한다.</span>
-      </li>
-      <li>
-        <span class="p-num">02</span>
-        <span>기능 추가보다 <strong>장애 복구 가능성</strong>을 우선한다.</span>
-      </li>
-      <li>
-        <span class="p-num">03</span>
-        <span>추상화보다 <strong>측정 가능한 단순함</strong>을 우선한다. Premature optimization을 피한다.</span>
-      </li>
-      <li>
-        <span class="p-num">04</span>
-        <span><strong>병목은 측정 후</strong> 해결한다. 추측으로 최적화하지 않는다.</span>
-      </li>
-      <li>
-        <span class="p-num">05</span>
-        <span><strong>운영 가능</strong>하지 않으면 완성된 기능이 아니다.</span>
-      </li>
-      <li>
-        <span class="p-num">06</span>
-        <span>모든 핵심 선택은 <strong>근거와 실험 결과</strong>를 남긴다 (ADR).</span>
-      </li>
-      <li>
-        <span class="p-num">07</span>
-        <span>아키텍처는 <strong>모듈러 모놀리스로 시작</strong>해 성능 병목 도메인만 점진적으로 분리한다.</span>
-      </li>
+      <li><span class="p-num">01</span><span>명세에 있는 것만 마일스톤에 넣는다.</li>
+      <li><span class="p-num">02</span><span><strong>정합성 &gt; 기능 개수.</strong> 오버셀·중복 결제를 먼저 막는다.</span></li>
+      <li><span class="p-num">03</span><span><strong>측정 후 튜닝.</strong> k6·Grafana 없는 주장은 쓰지 않는다.</span></li>
+      <li><span class="p-num">04</span><span><strong>운영 가능</strong>해야 완료다. 장애 시나리오·복구는 문서화.</span></li>
     </ul>
   </div>
 
-
   <div class="footer">
-    <div class="footer-project">FANDROPS · Backend Portfolio · 5인 팀 · 2025.05.19 – 06.25</div>
+    <div class="footer-project">FANDROPS · 5인 팀 · 2026.05.19 – 06.25</div>
     <div class="footer-nav">
       ← <a href="#">01 · 서비스 소개</a> &nbsp;&nbsp; → <a href="#">04 · 요구사항 정의서</a>
     </div>
