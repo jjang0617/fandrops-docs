@@ -1,951 +1,914 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FANDROPS 정보 구조도 (IA) v1.0</title>
-  <style>
-    :root {
-      --orange: #e85d04;
-      --orange-dark: #9a3412;
-      --orange-bg: #fff7ed;
-      --blue: #2563eb;
-      --blue-dark: #1d4ed8;
-      --blue-bg: #eff6ff;
-      --gray: #64748b;
-      --gray-bg: #f1f5f9;
-      --line: #94a3b8;
-      --card: #ffffff;
-      --text: #0f172a;
-      --muted: #475569;
-      --max: 1280px;
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
-      background: var(--gray-bg);
-      color: var(--text);
-      line-height: 1.5;
-    }
-
-    .top-bar {
-      background: var(--card);
-      border-bottom: 1px solid #e2e8f0;
-      padding: 12px 20px;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      box-shadow: 0 1px 3px rgba(0,0,0,.06);
-    }
-
-    .top-bar-inner {
-      max-width: var(--max);
-      margin: 0 auto;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-    }
-
-    .top-bar .brand {
-      font-weight: 700;
-      color: var(--orange);
-      font-size: 1rem;
-    }
-
-    .toc {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      font-size: 0.75rem;
-    }
-
-    .toc a {
-      color: var(--blue);
-      text-decoration: none;
-      padding: 4px 8px;
-      border-radius: 4px;
-      background: var(--blue-bg);
-    }
-
-    .toc a:hover { background: #dbeafe; }
-
-    .container {
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: 24px 20px 48px;
-    }
-
-    header.doc-header {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    header.doc-header h1 {
-      font-size: 1.6rem;
-      letter-spacing: -0.02em;
-    }
-
-    header.doc-header p {
-      margin-top: 6px;
-      color: var(--muted);
-      font-size: 0.88rem;
-    }
-
-    .legend {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 16px;
-      margin-bottom: 20px;
-      font-size: 0.78rem;
-    }
-
-    .legend span {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .legend i {
-      width: 12px;
-      height: 12px;
-      border-radius: 3px;
-    }
-
-    /* section blocks */
-    .ia-section {
-      background: var(--card);
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 20px;
-      box-shadow: 0 1px 3px rgba(0,0,0,.08);
-    }
-
-    .section-head {
-      display: flex;
-      align-items: baseline;
-      gap: 10px;
-      margin-bottom: 12px;
-      padding-bottom: 8px;
-      border-bottom: 2px solid var(--orange);
-    }
-
-    .section-head .num {
-      background: var(--orange);
-      color: #fff;
-      font-size: 0.7rem;
-      font-weight: 700;
-      padding: 2px 8px;
-      border-radius: 4px;
-    }
-
-    .section-head h2 {
-      font-size: 1.05rem;
-      color: var(--orange-dark);
-    }
-
-    .section-head .sub {
-      font-size: 0.75rem;
-      color: var(--muted);
-      margin-left: auto;
-    }
-
-    .callout {
-      background: var(--blue-bg);
-      border-left: 4px solid var(--blue);
-      padding: 10px 14px;
-      font-size: 0.8rem;
-      color: var(--muted);
-      border-radius: 0 8px 8px 0;
-      margin-bottom: 16px;
-    }
-
-    .callout strong { color: var(--text); }
-
-    .callout.warn {
-      background: var(--orange-bg);
-      border-left-color: var(--orange);
-    }
-
-  .connector-down {
-      display: flex;
-      justify-content: center;
-      margin: 8px 0 16px;
-    }
-
-    .connector-down .line {
-      width: 2px;
-      height: 28px;
-      background: var(--line);
-      position: relative;
-    }
-
-    .connector-down .line::after {
-      content: "";
-      position: absolute;
-      bottom: -1px;
-      left: 50%;
-      transform: translateX(-50%);
-      border: 5px solid transparent;
-      border-top-color: var(--line);
-    }
-
-    /* nodes */
-    .hdr {
-      background: var(--orange);
-      color: #fff;
-      font-weight: 700;
-      text-align: center;
-      padding: 9px 12px;
-      border-radius: 6px;
-      font-size: 0.82rem;
-    }
-
-    .hdr.blue { background: var(--blue); }
-    .hdr.gray { background: var(--gray); }
-    .hdr.outline {
-      background: #fff;
-      color: var(--orange-dark);
-      border: 2px solid var(--orange);
-      box-shadow: none;
-    }
-
-    .node {
-      background: var(--card);
-      border: 1px solid #e2e8f0;
-      border-radius: 6px;
-      padding: 9px 11px;
-      font-size: 0.78rem;
-    }
-
-    .node strong {
-      display: block;
-      font-size: 0.82rem;
-      margin-bottom: 3px;
-    }
-
-    .node ol {
-      margin: 4px 0 0 1.15em;
-      color: var(--muted);
-    }
-
-    .node ol li { margin: 2px 0; }
-
-    .fid {
-      display: block;
-      margin-top: 4px;
-      font-size: 0.68rem;
-      color: #94a3b8;
-      font-family: Consolas, monospace;
-    }
-
-    .badge {
-      display: inline-block;
-      font-size: 0.62rem;
-      font-weight: 600;
-      padding: 1px 6px;
-      border-radius: 3px;
-      margin-bottom: 4px;
-      vertical-align: middle;
-    }
-
-    .badge.link { background: #e0f2fe; color: #0369a1; }
-    .badge.core { background: var(--orange-bg); color: var(--orange-dark); }
-    .badge.out { background: #f1f5f9; color: var(--gray); }
-
-    /* onboarding */
-    .onboarding {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0;
-    }
-
-    .auth-branch {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-      width: 100%;
-      max-width: 720px;
-      margin-top: 12px;
-      position: relative;
-      padding-top: 12px;
-    }
-
-    .auth-branch::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 10%;
-      right: 10%;
-      height: 2px;
-      background: var(--line);
-    }
-
-    .auth-col {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      align-items: stretch;
-    }
-
-    .auth-col .h-connector {
-      width: 2px;
-      height: 12px;
-      background: var(--line);
-      margin: 0 auto;
-    }
-
-    .v-arrow {
-      width: 2px;
-      height: 20px;
-      background: var(--line);
-      position: relative;
-      margin: 0 auto;
-    }
-
-    .v-arrow::after {
-      content: "";
-      position: absolute;
-      bottom: -1px;
-      left: 50%;
-      transform: translateX(-50%);
-      border: 5px solid transparent;
-      border-top-color: var(--line);
-    }
-
-    /* post login */
-    .post-login {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-      align-items: start;
-    }
-
-    @media (max-width: 700px) {
-      .post-login { grid-template-columns: 1fr; }
-    }
-
-    .side-flow {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      align-items: center;
-    }
-
-    .promo-box {
-      border: 2px dashed var(--orange);
-      background: var(--orange-bg);
-      border-radius: 8px;
-      padding: 12px;
-      text-align: center;
-      width: 100%;
-    }
-
-    /* tabs */
-    .tabs {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-    }
-
-    @media (max-width: 900px) {
-      .tabs { grid-template-columns: repeat(2, 1fr); }
-    }
-
-    @media (max-width: 500px) {
-      .tabs { grid-template-columns: 1fr; }
-    }
-
-    .tab-col {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .tab-col .node.nested {
-      margin-left: 6px;
-      border-left: 3px solid var(--orange);
-      background: var(--orange-bg);
-    }
-
-    .sub-label {
-      font-size: 0.68rem;
-      color: var(--orange-dark);
-      font-weight: 700;
-      margin: 2px 0 0 6px;
-    }
-
-    /* artist space */
-    .artist-space {
-      border: 2px solid var(--orange);
-      border-radius: 10px;
-      padding: 16px;
-      background: linear-gradient(180deg, var(--orange-bg) 0%, #fff 40%);
-    }
-
-    .artist-tabs {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 8px;
-    }
-
-    @media (max-width: 900px) {
-      .artist-tabs { grid-template-columns: repeat(3, 1fr); }
-    }
-
-    @media (max-width: 500px) {
-      .artist-tabs { grid-template-columns: repeat(2, 1fr); }
-    }
-
-    .artist-tabs .hdr { font-size: 0.72rem; padding: 7px 4px; }
-
-    .artist-extra {
-      margin-top: 10px;
-      padding-top: 10px;
-      border-top: 1px dashed var(--line);
-    }
-
-    /* commerce - 4 steps */
-    .commerce-flow {
-      display: grid;
-      grid-template-columns: 1fr 32px 1fr 32px 1fr 32px 1fr;
-      align-items: stretch;
-      gap: 0;
-    }
-
-    @media (max-width: 800px) {
-      .commerce-flow {
-        grid-template-columns: 1fr;
-        gap: 8px;
-      }
-      .flow-arrow { transform: rotate(90deg); margin: 4px auto; }
-    }
-
-    .flow-box {
-      border: 2px dashed #cbd5e1;
-      border-radius: 8px;
-      padding: 12px;
-      background: #fafafa;
-    }
-
-    .flow-box h3 {
-      font-size: 0.8rem;
-      color: var(--orange-dark);
-      margin-bottom: 8px;
-    }
-
-    .flow-box.step-1 { border-color: #fbbf24; background: #fffbeb; }
-    .flow-box.step-2 { border-color: var(--orange); background: var(--orange-bg); }
-    .flow-box.step-3 { border-color: var(--blue); background: var(--blue-bg); }
-    .flow-box.step-4 { border-color: #22c55e; background: #f0fdf4; }
-
-    .flow-arrow {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--line);
-      font-size: 1.25rem;
-      font-weight: 700;
-    }
-
-    .admin-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-    }
-
-    @media (max-width: 600px) {
-      .admin-grid { grid-template-columns: 1fr; }
-    }
-
-    /* mapping table */
-  .map-wrap { overflow-x: auto; }
-
-    table.map {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.76rem;
-    }
-
-    table.map th {
-      background: var(--orange);
-      color: #fff;
-      padding: 8px 10px;
-      text-align: left;
-      white-space: nowrap;
-    }
-
-    table.map td {
-      border: 1px solid #e2e8f0;
-      padding: 6px 10px;
-      vertical-align: top;
-    }
-
-    table.map tr:nth-child(even) td { background: #f8fafc; }
-
-    .arch-diagram {
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
-      gap: 12px;
-      align-items: center;
-      margin-bottom: 16px;
-      font-size: 0.78rem;
-    }
-
-    @media (max-width: 700px) {
-      .arch-diagram { grid-template-columns: 1fr; }
-    }
-
-    .arch-box {
-      border-radius: 8px;
-      padding: 12px;
-      text-align: center;
-    }
-
-    .arch-box.gnb {
-      background: var(--orange-bg);
-      border: 2px solid var(--orange);
-    }
-
-    .arch-box.artist {
-      background: var(--blue-bg);
-      border: 2px solid var(--blue);
-    }
-
-    .arch-arrow {
-      font-size: 1.5rem;
-      color: var(--line);
-      text-align: center;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FANDROPS — 정보 구조도 (IA)</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --text-primary: #111111;
+  --text-secondary: #555555;
+  --text-muted: #999999;
+  --border: #e5e5e5;
+  --bg: #ffffff;
+  --bg-subtle: #f8f8f6;
+  --bg-dark: #111111;
+  --max: 1000px;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.page {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 2rem 5rem;
+}
+
+.topbar {
+  border-bottom: 1px solid var(--border);
+  padding: 1.25rem 0;
+  margin-bottom: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.topbar-left {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.toc {
+  display: flex;
+  gap: 8px;
+}
+.toc a {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-decoration: none;
+  padding: 3px 8px;
+  border-radius: 3px;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+}
+.toc a:hover {
+  background: var(--bg-dark);
+  color: #fff;
+  border-color: var(--bg-dark);
+}
+
+.page-title {
+  margin-bottom: 3rem;
+}
+.page-title-eyebrow {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+}
+.page-title h1 {
+  font-family: 'DM Sans', sans-serif;
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  color: var(--text-primary);
+}
+.page-title h1 span {
+  color: var(--text-muted);
+  font-weight: 300;
+}
+
+.section { margin-bottom: 3.5rem; }
+
+.section-header {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+.section-num {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+}
+.section-title {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+}
+.section-sub {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-left: auto;
+}
+
+.legend {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 2rem;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+.legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.legend i {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+}
+
+.callout {
+  background: var(--bg-subtle);
+  border-left: 3px solid var(--text-primary);
+  border-radius: 0 4px 4px 0;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+.callout strong { color: var(--text-primary); font-weight: 500; }
+.callout.warn {
+  border-left-color: #d97706;
+}
+
+.connector-down {
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0 2rem;
+}
+.connector-down .line {
+  width: 1px;
+  height: 30px;
+  background: var(--border);
+  position: relative;
+}
+.connector-down .line::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 4px solid transparent;
+  border-top-color: var(--border);
+}
+
+.hdr {
+  background: var(--bg-dark);
+  color: #fff;
+  font-weight: 600;
+  text-align: center;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.hdr.secondary {
+  background: var(--bg-subtle);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+}
+.hdr.outline {
+  background: #fff;
+  color: var(--text-primary);
+  border: 1px solid var(--text-primary);
+}
+
+.node {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 10px 12px;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+.node strong {
+  display: block;
+  font-size: 13px;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+.node ol {
+  margin: 6px 0 0 1.2em;
+  color: var(--text-secondary);
+}
+.node ol li { margin: 2px 0; }
+
+.fid {
+  display: block;
+  margin-top: 4px;
+  font-size: 11px;
+  color: var(--text-muted);
+  font-family: Consolas, monospace;
+}
+
+.badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 500;
+  padding: 1px 5px;
+  border-radius: 2px;
+  margin-bottom: 4px;
+  vertical-align: middle;
+}
+.badge.link { background: var(--bg-subtle); border: 1px solid var(--border); color: var(--text-secondary); }
+.badge.core { background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; }
+.badge.out { background: #fef2f2; border: 1px solid #fecaca; color: #991b1b; }
+
+.onboarding {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.auth-branch {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  width: 100%;
+  margin-top: 1rem;
+  position: relative;
+  padding-top: 1rem;
+}
+.auth-branch::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 15%;
+  right: 15%;
+  height: 1px;
+  background: var(--border);
+}
+.auth-col {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.auth-col .h-connector {
+  width: 1px;
+  height: 12px;
+  background: var(--border);
+  margin: 0 auto;
+}
+.v-arrow {
+  width: 1px;
+  height: 20px;
+  background: var(--border);
+  position: relative;
+  margin: 0 auto;
+}
+.v-arrow::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 4px solid transparent;
+  border-top-color: var(--border);
+}
+
+.post-login {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+.side-flow {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+.promo-box {
+  border: 1px dashed var(--border);
+  background: var(--bg-subtle);
+  border-radius: 4px;
+  padding: 12px;
+  text-align: center;
+  width: 100%;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.tabs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+.tab-col {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.tab-col .node.nested {
+  margin-left: 8px;
+  border-left: 2px solid var(--text-primary);
+  background: var(--bg-subtle);
+}
+.sub-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 500;
+  margin: 4px 0 0 8px;
+}
+
+.artist-space {
+  border: 1px solid var(--text-primary);
+  border-radius: 6px;
+  padding: 1.5rem;
+  background: var(--bg);
+}
+.artist-tabs {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+}
+.artist-tabs .hdr { font-size: 11px; padding: 6px 4px; }
+.artist-extra {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px dashed var(--border);
+}
+
+.commerce-flow {
+  display: grid;
+  grid-template-columns: 1fr 24px 1fr 24px 1fr 24px 1fr;
+  align-items: stretch;
+  gap: 0;
+}
+.flow-box {
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 12px;
+  background: var(--bg-subtle);
+}
+.flow-box h3 {
+  font-size: 12px;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+.flow-box.step-1 { border-color: var(--border); background: var(--bg-subtle); }
+.flow-box.step-2 { border-color: var(--border); background: #fff; }
+.flow-box.step-3 { border-color: var(--text-primary); background: var(--bg-subtle); }
+.flow-box.step-4 { border-color: var(--border); background: #fff; }
+.flow-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.admin-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.map-wrap { overflow-x: auto; margin-top: 1rem; }
+table.map {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+table.map th {
+  background: var(--bg-subtle);
+  color: var(--text-primary);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--text-primary);
+  padding: 10px;
+  text-align: left;
+}
+table.map td {
+  border-bottom: 1px solid var(--border);
+  padding: 10px;
+  vertical-align: top;
+  color: var(--text-secondary);
+}
+table.map tr:nth-child(even) td { background: var(--bg-subtle); }
+
+.arch-diagram {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 16px;
+  font-size: 13px;
+}
+.arch-box {
+  border-radius: 4px;
+  padding: 12px;
+  text-align: center;
+  border: 1px solid var(--border);
+}
+.arch-box.gnb {
+  background: var(--bg-subtle);
+  border-color: var(--text-primary);
+}
+.arch-box.artist {
+  background: #fff;
+  border-color: var(--text-primary);
+}
+.arch-arrow {
+  font-size: 16px;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .artist-tabs { grid-template-columns: repeat(4, 1fr); }
+  .tabs { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 700px) {
+  .post-login { grid-template-columns: 1fr; }
+  .arch-diagram { grid-template-columns: 1fr; }
+  .commerce-flow { grid-template-columns: 1fr; gap: 8px; }
+  .flow-arrow { transform: rotate(90deg); margin: 4px auto; }
+}
+@media (max-width: 600px) {
+  .page { padding: 0 1.25rem 4rem; }
+  .artist-tabs { grid-template-columns: repeat(2, 1fr); }
+  .tabs { grid-template-columns: 1fr; }
+  .admin-grid { grid-template-columns: 1fr; }
+}
+</style>
 </head>
 <body>
+<div class="page">
 
-  <nav class="top-bar" aria-label="목차">
-    <div class="top-bar-inner">
-      <span class="brand">FANDROPS IA</span>
-      <div class="toc">
-        <a href="#s1">① 온보딩</a>
-        <a href="#s2">② 진입</a>
-        <a href="#s3">③ GNB</a>
-        <a href="#s4">④ 아티스트 홈</a>
-        <a href="#s5">⑤ 결제</a>
-        <a href="#s6">⑥ Admin</a>
-        <a href="#s7">⑦ 매핑표</a>
-      </div>
+  <nav class="topbar" aria-label="목차">
+    <div class="topbar-left">FANDROPS · 정보 구조도 (IA)</div>
+    <div class="toc">
+      <a href="#s1">① 온보딩</a>
+      <a href="#s2">② 진입</a>
+      <a href="#s3">③ GNB</a>
+      <a href="#s4">④ 아티스트 홈</a>
+      <a href="#s5">⑤ 결제</a>
+      <a href="#s6">⑥ Admin</a>
+      <a href="#s7">⑦ 매핑표</a>
     </div>
   </nav>
 
-  <main class="container">
-    <header class="doc-header">
-      <h1>FANDROPS 정보 구조도 (IA)</h1>
-      <p>팬덤 커머스/예약 플랫폼 · 요구사항 명세서 v1.0 (2026.05.13) · MVP</p>
-    </header>
+  <div class="page-title">
+    <div class="page-title-eyebrow">FANDROPS · Information Architecture</div>
+    <h1>Information Architecture <span>/ 정보 구조도</span></h1>
+  </div>
 
-    <div class="legend">
-      <span><i style="background:var(--orange)"></i> 팬 앱</span>
-      <span><i style="background:var(--blue)"></i> 아티스트/운영</span>
-      <span><i style="background:var(--gray)"></i> Admin</span>
-      <span><span class="badge link">바로가기</span> GNB 요약·탐색</span>
-      <span><span class="badge core">핵심</span> 실제 팬 경험 화면</span>
-      <span class="fid">Fxx-xx = 기능 ID (§3 기준)</span>
+  <div class="legend">
+    <span><i style="background:var(--bg-dark)"></i> 팬 앱 / GNB / 공통</span>
+    <span><i style="background:var(--bg-subtle); border:1px solid var(--border)"></i> 아티스트 홈 / 운영</span>
+    <span><i style="background:var(--bg-subtle); border:1px dashed var(--border)"></i> Admin 백오피스</span>
+    <span><span class="badge link">바로가기</span> GNB 요약·탐색</span>
+    <span><span class="badge core">핵심</span> 실제 팬 경험 화면</span>
+    <span class="fid">Fxx-xx = 기능 ID (§3 기준)</span>
+  </div>
+
+  <!-- ARCHITECTURE OVERVIEW -->
+  <section class="section" id="arch">
+    <div class="section-header">
+      <span class="section-num">구조</span>
+      <span class="section-title">앱 구조 한눈에 보기</span>
+    </div>
+    <div class="arch-diagram">
+      <div class="arch-box gnb">
+        <strong>GNB 4탭</strong><br />
+        홈 · 커뮤니티 · 스토어 · 더보기<br />
+        <span style="color:var(--text-muted); font-size:12px;">플랫폼 탐색 · 알림 · 바로가기</span>
+      </div>
+      <div class="arch-arrow">→<br /><small style="font-size:11px; color:var(--text-muted);">아티스트 선택</small></div>
+      <div class="arch-box artist">
+        <strong>아티스트 홈 7탭</strong><br />
+        피드 · 공지 · 상점 · 일정 · LIVE · 출석 · 투표<br />
+        <span style="color:var(--text-muted); font-size:12px;">위버스형 아티스트 전용 공간 · F03-01</span>
+      </div>
+    </div>
+    <div class="callout">
+      <strong>중복 구조가 아닙니다.</strong> GNB의 「커뮤니티·스토어」는 전체 가입 아티스트에 진입하기 전의 <em>전역 요약/탐색</em> 홈이며, 상세 커뮤니티 작성·글쓰기·주문 등은 반드시 특정 <strong>아티스트 홈</strong>에 진입한 뒤 활성화됩니다.
+    </div>
+  </section>
+
+  <!-- S1 ONBOARDING -->
+  <section class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">①</span>
+      <span class="section-title">온보딩 · 인증</span>
+      <span class="section-sub">F01 · Fan</span>
     </div>
 
-    <!-- ARCHITECTURE OVERVIEW -->
-    <section class="ia-section" id="arch">
-      <div class="section-head">
-        <span class="num">구조</span>
-        <h2>앱 구조 한눈에 보기</h2>
-      </div>
-      <div class="arch-diagram">
-        <div class="arch-box gnb">
-          <strong>GNB 4탭</strong><br />
-          홈 · 커뮤니티 · 스토어 · 더보기<br />
-          <span style="color:var(--muted)">플랫폼 탐색 · 알림 · 바로가기</span>
-        </div>
-        <div class="arch-arrow">→<br /><small>아티스트 선택</small></div>
-        <div class="arch-box artist">
-          <strong>아티스트 홈 6탭</strong><br />
-          피드 · 공지 · 상점 · 일정 · LIVE · 출석<br />
-          <span style="color:var(--muted)">위버스형 · F03-01</span>
-        </div>
-      </div>
-      <div class="callout">
-        <strong>중복이 아닙니다.</strong>
-        GNB의 「커뮤니티·스토어」는 가입 아티스트로 들어가기 전 <em>탐색·요약</em>이고,
-        댓글·구매·피드 등 실제 기능은 반드시 <strong>아티스트 홈</strong>에서 동작합니다.
-      </div>
-    </section>
+    <div class="onboarding">
+      <div class="node" style="text-align:center; max-width:200px"><strong>스플래시</strong></div>
+      <div class="v-arrow"></div>
+      <div class="node" style="text-align:center; max-width:200px"><strong>튜토리얼</strong>서비스 소개</div>
+      <div class="v-arrow"></div>
 
-    <!-- S1 ONBOARDING -->
-    <section class="ia-section" id="s1">
-      <div class="section-head">
-        <span class="num">①</span>
-        <h2>온보딩 · 인증</h2>
-        <span class="sub">F01 · Fan</span>
-      </div>
-
-      <div class="onboarding">
-        <div class="node" style="text-align:center;max-width:200px"><strong>스플래시</strong></div>
-        <div class="v-arrow"></div>
-        <div class="node" style="text-align:center;max-width:200px"><strong>튜토리얼</strong>서비스 소개 (선택)</div>
-        <div class="v-arrow"></div>
-
-        <div class="auth-branch">
-          <div class="auth-col">
-            <div class="h-connector"></div>
-            <div class="hdr">회원가입</div>
-            <div class="node">
-              <strong>정보 입력 · 약관</strong>
-              <ol>
-                <li>이메일 · 비밀번호 · 닉네임</li>
-                <li>이용약관 · 개인정보</li>
-              </ol>
-              <span class="fid">F01-01</span>
-            </div>
-            <div class="node"><strong>이메일 인증</strong><span class="fid">F01-01</span></div>
-          </div>
-
-          <div class="auth-col">
-            <div class="h-connector"></div>
-            <div class="hdr">로그인</div>
-            <div class="node"><strong>아이디/비밀번호</strong><span class="fid">F01-01</span></div>
-            <div class="node"><strong>소셜 로그인</strong>카카오 · 구글<span class="fid">F01-02</span></div>
-          </div>
-
-          <div class="auth-col">
-            <div class="h-connector"></div>
-            <div class="hdr gray">비밀번호 찾기</div>
-            <div class="node">
-              <strong>계정/비밀번호 재설정</strong>
-              이메일 인증 → 재설정
-              <span class="fid">F01-03</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <div class="connector-down"><div class="line"></div></div>
-
-    <!-- S2 POST LOGIN -->
-    <section class="ia-section" id="s2">
-      <div class="section-head">
-        <span class="num">②</span>
-        <h2>로그인 후 진입</h2>
-      </div>
-
-      <div class="post-login">
-        <div class="side-flow">
-          <div class="hdr blue">운영자 입점 (별도)</div>
+      <div class="auth-branch">
+        <div class="auth-col">
+          <div class="h-connector"></div>
+          <div class="hdr">회원가입</div>
           <div class="node">
-            <strong>입점 신청서 제출</strong>
-            <span class="fid">F02-01 · Artist</span>
-          </div>
-          <div class="v-arrow"></div>
-          <div class="node">
-            <strong>승인/반려 결과 알림</strong>
-            <span style="font-size:0.72rem;color:var(--muted)">Admin 심사는 §⑥ 참고</span>
-          </div>
-        </div>
-
-        <div class="side-flow">
-          <div class="promo-box">
-            <strong>랭킹 팝업</strong><br />이달의 아이돌
-            <span class="fid">F03-05 · 화면 No.15</span>
-          </div>
-          <div class="v-arrow"></div>
-          <div class="hdr outline">GNB 메인 진입</div>
-        </div>
-      </div>
-    </section>
-
-    <div class="connector-down"><div class="line"></div></div>
-
-    <!-- S3 GNB -->
-    <section class="ia-section" id="s3">
-      <div class="section-head">
-        <span class="num">③</span>
-        <h2>메인 네비게이션 (GNB 4탭)</h2>
-        <span class="sub">탐색·바로가기</span>
-      </div>
-
-      <div class="tabs">
-        <div class="tab-col">
-          <div class="hdr">홈</div>
-          <div class="node">
-            <span class="badge core">핵심</span>
-            <strong>알림센터</strong>
-            새 글 · 댓글답글 · 하트
-            <span class="fid">F03-04 · No.12</span>
-          </div>
-          <div class="node">
-            <span class="badge core">핵심</span>
-            <strong>메인 배너</strong>
-            핫이벤트 · 프로모션
-            <span class="fid">F04-03 · No.1</span>
-          </div>
-          <div class="node">
-            <span class="badge link">바로가기</span>
-            <strong>아티스트 탐색·랭킹</strong>
-            <span class="fid">F03-05</span>
-          </div>
-          <div class="node">
-            <span class="badge link">바로가기</span>
-            <strong>가입 아티스트 목록</strong>
-            <span class="fid">F07-01</span>
-          </div>
-          <p class="sub-label">▼ 아티스트 홈으로</p>
-          <div class="node nested">
-            <strong>프로필 · 외부링크</strong>
-            <span class="fid">F02-03 · No.3</span>
-          </div>
-          <div class="node nested">
-            <strong>팬 가입 모달</strong>
-            댓글/구매 전 필수
-            <span class="fid">F01-04 · No.5</span>
-          </div>
-        </div>
-
-        <div class="tab-col">
-          <div class="hdr">커뮤니티 · 일정</div>
-          <div class="node">
-            <span class="badge link">바로가기</span>
-            <strong>가입 아티스트 피드·일정</strong>
-            → ④ 아티스트 홈
-          </div>
-          <div class="node">
-            <span class="badge link">바로가기</span>
-            <strong>행사 · 티켓 안내</strong>
-            <span class="fid">F05 · No.8</span>
-          </div>
-        </div>
-
-        <div class="tab-col">
-          <div class="hdr">스토어</div>
-          <div class="node">
-            <span class="badge link">바로가기</span>
-            <strong>상시 · 핫딜 목록</strong>
-            <span class="fid">F04-01,02 · No.6</span>
-          </div>
-          <div class="node">
-            <span class="badge core">핵심</span>
-            <strong>상품 상세 · 주문서</strong>
-            <span class="fid">F04-04 · No.7</span>
-          </div>
-          <div class="node">
-            <strong>재입고 알림센터</strong>
-            <span class="fid">F04-06 · No.18</span>
-          </div>
-        </div>
-
-        <div class="tab-col">
-          <div class="hdr">더보기</div>
-          <div class="node"><strong>내 정보</strong>이메일 · 비밀번호</div>
-          <div class="node"><strong>가입/활동내역</strong><span class="fid">F07-01 · No.11</span></div>
-          <div class="node"><strong>주문·결제 내역</strong><span class="fid">F07-02</span></div>
-          <div class="node"><strong>알림 설정</strong><span class="fid">F03-04</span></div>
-          <div class="node">
-            <strong>고객센터</strong>FAQ · 1:1
-            <span class="badge out">명세 외</span>
-          </div>
-          <div class="node"><strong>공지/이벤트 · 정책 · 버전</strong></div>
-          <div class="node" style="border-color:var(--blue)">
-            <strong>입점 신청</strong>
-            <span class="fid">F02-01 · No.13</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- S4 ARTIST HOME -->
-    <section class="ia-section artist-space" id="s4">
-      <div class="section-head" style="border-color:var(--blue)">
-        <span class="num" style="background:var(--blue)">④</span>
-        <h2 style="color:var(--blue-dark)">아티스트 홈 (6탭) — 실제 팬 경험</h2>
-        <span class="sub">F03-01 · No.3</span>
-      </div>
-
-      <div class="artist-tabs">
-        <div>
-          <div class="hdr">피드</div>
-          <div class="node" style="margin-top:6px">
-            <span class="badge core">핵심</span>
+            <strong>정보 입력 · 약관 동의</strong>
             <ol>
-              <li>게시글 (이미지+텍스트)</li>
-              <li>댓글 · 하트 · 답글</li>
+              <li>이메일 · 비밀번호 · 닉네임</li>
+              <li>이용약관 · 개인정보 수집</li>
             </ol>
-            <span class="fid">F03-02,03 · No.4</span>
+            <span class="fid">F01-01</span>
           </div>
+          <div class="node"><strong>이메일 인증</strong><span class="fid">F01-01</span></div>
         </div>
-        <div>
-          <div class="hdr">공지</div>
-          <div class="node" style="margin-top:6px">목록 · 상세</div>
-        </div>
-        <div>
-          <div class="hdr">상점</div>
-          <div class="node" style="margin-top:6px">
-            상시/핫딜 · 장바구니
-            <span class="fid">F04-01~04</span>
-          </div>
-        </div>
-        <div>
-          <div class="hdr">일정</div>
-          <div class="node" style="margin-top:6px">
-            캘린더 · 행사
-            <span class="fid">F03-06 · No.16</span>
-          </div>
-        </div>
-        <div>
-          <div class="hdr">LIVE</div>
-          <div class="node" style="margin-top:6px">
-            유튜브 임베드 · 알림
-            <span class="fid">F03-07 · No.17</span>
-          </div>
-        </div>
-        <div>
-          <div class="hdr gray">출석</div>
-          <div class="node" style="margin-top:6px">MVP+</div>
-        </div>
-      </div>
-      <div class="artist-extra node" style="border-color:var(--blue)">
-        <span class="badge core">추가</span>
-        <strong>커뮤니티 설정</strong>
-        <span class="fid">F03-10 · No.21</span>
-      </div>
-    </section>
 
-    <!-- S5 PAYMENT -->
-    <section class="ia-section" id="s5">
-      <div class="section-head">
-        <span class="num">⑤</span>
-        <h2>핫딜 · 결제 흐름 (시간순)</h2>
-      </div>
+        <div class="auth-col">
+          <div class="h-connector"></div>
+          <div class="hdr">로그인</div>
+          <div class="node"><strong>이메일 로그인</strong><span class="fid">F01-01</span></div>
+          <div class="node"><strong>소셜 로그인</strong>카카오 · 구글<span class="fid">F01-02</span></div>
+        </div>
 
-      <div class="commerce-flow">
-        <div class="flow-box step-1">
-          <h3>① 오픈 · 대기열</h3>
-          <div class="node" style="border:none;padding:0;background:transparent">
-            대기열 · API 레이트리밋
-            <span class="fid">F08-01</span>
+        <div class="auth-col">
+          <div class="h-connector"></div>
+          <div class="hdr secondary">비밀번호 찾기</div>
+          <div class="node">
+            <strong>임시 링크 / 메일 발송</strong>
+            이메일 인증 후 새 비밀번호 설정
+            <span class="fid">F01-03</span>
           </div>
         </div>
-        <div class="flow-arrow">→</div>
-        <div class="flow-box step-2">
-          <h3>② 주문 · 결제창</h3>
-          <ol style="margin-left:1.2em;font-size:0.76rem;color:var(--muted)">
-            <li>주문서 생성</li>
-            <li><strong>결제창 (토스 PG)</strong></li>
-            <li>결제 상태/재시도</li>
-            <li>멱등성 처리</li>
+      </div>
+    </div>
+  </section>
+
+  <div class="connector-down"><div class="line"></div></div>
+
+  <!-- S2 POST LOGIN -->
+  <section class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">②</span>
+      <span class="section-title">로그인 후 진입</span>
+    </div>
+
+    <div class="post-login">
+      <div class="side-flow">
+        <div class="hdr outline">운영자/파트너 (Partner)</div>
+        <div class="node">
+          <strong>입점 신청서 작성</strong>
+          회사명, 사업자번호, 아티스트 정보 등
+          <span class="fid">F02-01</span>
+        </div>
+        <div class="v-arrow"></div>
+        <div class="node">
+          <strong>심사 통과 시 공간 생성</strong>
+          메일 알림 및 아티스트 홈 공개
+        </div>
+      </div>
+
+      <div class="side-flow">
+        <div class="hdr">일반 사용자 (Fan)</div>
+        <div class="node">
+          <strong>GNB 메인 홈 진입</strong>
+          통합 홈 화면 노출
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="connector-down"><div class="line"></div></div>
+
+  <!-- S3 GNB -->
+  <section class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">③</span>
+      <span class="section-title">메인 네비게이션 (GNB 4탭)</span>
+      <span class="section-sub">탐색 · 바로가기</span>
+    </div>
+
+    <div class="tabs">
+      <div class="tab-col">
+        <div class="hdr">홈</div>
+        <div class="node">
+          <span class="badge core">핵심</span>
+          <strong>알림센터</strong>
+          새 글 · 댓글답글 · 구매 성공 등
+          <span class="fid">F03-04</span>
+        </div>
+        <div class="node">
+          <span class="badge core">핵심</span>
+          <strong>메인 배너</strong>
+          핫이벤트 · 핫딜 프로모션
+          <span class="fid">F04-03</span>
+        </div>
+        <div class="node">
+          <span class="badge link">바로가기</span>
+          <strong>아티스트 검색/탐색</strong>
+          공간 목록 노출
+          <span class="fid">F03-01</span>
+        </div>
+        <div class="node">
+          <span class="badge link">바로가기</span>
+          <strong>가입 아티스트 목록</strong>
+          내 활동 공간 리스트
+          <span class="fid">F07-01</span>
+        </div>
+        <p class="sub-label">▼ 아티스트 홈으로</p>
+        <div class="node nested">
+          <strong>프로필 · 외부링크</strong>
+          일정 정보 및 링크 노출
+          <span class="fid">F02-03</span>
+        </div>
+        <div class="node nested">
+          <strong>팬 가입 모달</strong>
+          글작성/투표 전 선행 가입
+          <span class="fid">F01-04</span>
+        </div>
+      </div>
+
+      <div class="tab-col">
+        <div class="hdr">커뮤니티 · 일정</div>
+        <div class="node">
+          <span class="badge link">바로가기</span>
+          <strong>가입 아티스트 피드</strong>
+          → ④ 아티스트 홈
+        </div>
+        <div class="node">
+          <span class="badge link">바로가기</span>
+          <strong>행사 · 티켓 안내</strong>
+          팬미팅, 외부 예매 링크 연동
+          <span class="fid">F05-01, 03</span>
+        </div>
+      </div>
+
+      <div class="tab-col">
+        <div class="hdr">스토어</div>
+        <div class="node">
+          <span class="badge link">바로가기</span>
+          <strong>상시 · 핫딜 목록</strong>
+          전체 상품 브라우징
+          <span class="fid">F04-01,02</span>
+        </div>
+        <div class="node">
+          <span class="badge core">핵심</span>
+          <strong>상품 상세 · 주문서</strong>
+          RDB 장바구니 기반 주문서
+          <span class="fid">F04-04</span>
+        </div>
+        <div class="node">
+          <strong>재입고 알림 신청</strong>
+          SMS/알림톡 발송 예약
+          <span class="fid">F04-05</span>
+        </div>
+      </div>
+
+      <div class="tab-col">
+        <div class="hdr">더보기</div>
+        <div class="node"><strong>내 정보 수정</strong>이메일 · 비밀번호 변경</div>
+        <div class="node"><strong>가입/활동 내역</strong>마이페이지 히스토리<span class="fid">F07-01</span></div>
+        <div class="node"><strong>주문·결제 내역</strong>영수증 확인 및 결제 복구<span class="fid">F07-02</span></div>
+        <div class="node"><strong>알림 설정</strong>푸시 온/오프<span class="fid">F03-04</span></div>
+        <div class="node">
+          <strong>고객센터</strong>FAQ · 1:1 (Phase 2)
+          <span class="badge out">MVP 제외</span>
+        </div>
+        <div class="node"><strong>공지사항 / 서비스 정책</strong></div>
+        <div class="node" style="border-color:var(--bg-dark)">
+          <strong>입점 신청서 제출</strong>
+          <span class="fid">F02-01</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- S4 ARTIST HOME -->
+  <section class="section artist-space" id="s4">
+    <div class="section-header">
+      <span class="section-num">④</span>
+      <span class="section-title" style="color:var(--text-primary)">아티스트 홈 (7탭) — 실제 팬 경험</span>
+      <span class="section-sub">F03-01</span>
+    </div>
+
+    <div class="artist-tabs">
+      <div>
+        <div class="hdr">피드</div>
+        <div class="node" style="margin-top:6px">
+          <span class="badge core">핵심</span>
+          <ol>
+            <li>게시글 작성·조회</li>
+            <li>댓글 · 하트 · 답글</li>
           </ol>
-          <span class="fid">F04-04, F06-01~03 · No.10</span>
-        </div>
-        <div class="flow-arrow">→</div>
-        <div class="flow-box step-3">
-          <h3>③ 웹훅 · 정합성</h3>
-          <ol style="margin-left:1.2em;font-size:0.76rem;color:var(--muted)">
-            <li>주문 확정 · 재고 차감</li>
-            <li>알림 발송</li>
-            <li>실패 시 취소·복구</li>
-          </ol>
-          <span class="fid">F06-04, F06-05</span>
-        </div>
-        <div class="flow-arrow">→</div>
-        <div class="flow-box step-4">
-          <h3>④ 완료</h3>
-          <div class="node" style="border:none;padding:0;background:transparent">
-            마이페이지 주문내역
-            <span class="fid">F07-02</span>
-          </div>
+          <span class="fid">F03-02, 03</span>
         </div>
       </div>
-    </section>
+      <div>
+        <div class="hdr">공지</div>
+        <div class="node" style="margin-top:6px">아티스트 전체 공지 목록 · 상세</div>
+      </div>
+      <div>
+        <div class="hdr">상점</div>
+        <div class="node" style="margin-top:6px">
+          해당 아티스트 상시/핫딜 상품, RDB 장바구니 담기
+          <span class="fid">F04-01~04</span>
+        </div>
+      </div>
+      <div>
+        <div class="hdr">일정</div>
+        <div class="node" style="margin-top:6px">
+          캘린더 통합 일정 조회
+          <span class="fid">F03-05</span>
+        </div>
+      </div>
+      <div>
+        <div class="hdr">LIVE</div>
+        <div class="node" style="margin-top:6px">
+          라이브 스트리밍 유튜브 임베드 및 알림
+          <span class="fid">F03-06</span>
+        </div>
+      </div>
+      <div>
+        <div class="hdr">출석</div>
+        <div class="node" style="margin-top:6px">
+          <span class="badge core">신규</span>
+          출석체크 수행 (7일 달성 리워드 후보 선정)
+          <span class="fid">F03-07</span>
+        </div>
+      </div>
+      <div>
+        <div class="hdr">투표</div>
+        <div class="node" style="margin-top:6px">
+          <span class="badge core">신규</span>
+          굿즈 디자인·콘셉트 투표 (팬회원 전용)
+          <span class="fid">F03-08</span>
+        </div>
+      </div>
+    </div>
+    <div class="artist-extra node">
+      <span class="badge core">제재</span>
+      <strong>커뮤니티 설정 및 도배 제한</strong>
+      댓글 연속 도배 방지 필터링 정책 적용
+      <span class="fid">F03-09</span>
+    </div>
+  </section>
 
-    <!-- S6 ADMIN -->
-    <section class="ia-section" id="s6">
-      <div class="section-head">
-        <span class="num">⑥</span>
-        <h2>관리자 (Admin)</h2>
-        <span class="sub">백오피스 · Fan 앱과 분리</span>
-      </div>
-      <div class="admin-grid">
-        <div>
-          <div class="hdr gray">입점 심사</div>
-          <div class="node" style="margin-top:6px">
-            신청 검토 · 승인/반려
-            <span class="fid">F02-02 · No.14</span>
-          </div>
-        </div>
-        <div>
-          <div class="hdr gray">모니터링</div>
-          <div class="node" style="margin-top:6px">
-            입점/상품/주문/장애
-            <span class="fid">F08-02</span>
-          </div>
-        </div>
-        <div>
-          <div class="hdr gray">운영</div>
-          <div class="node" style="margin-top:6px">신고/제재 · 배너 · 모니터링</div>
+  <!-- S5 PAYMENT -->
+  <section class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">⑤</span>
+      <span class="section-title">핫딜 · 결제 흐름 (시간순)</span>
+    </div>
+
+    <div class="commerce-flow">
+      <div class="flow-box step-1">
+        <h3>① 오픈 · 대기열</h3>
+        <div class="node" style="border:none; padding:0; background:transparent">
+          대기열 진입제어 및 RateLimit 정책 (Access Ticket 발급 및 Nginx 보호)
         </div>
       </div>
-    </section>
-
-    <!-- S7 MAPPING -->
-    <section class="ia-section" id="s7">
-      <div class="section-head">
-        <span class="num">⑦</span>
-        <h2>화면–기능 매핑표</h2>
-        <span class="sub">명세 §5</span>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box step-2">
+        <h3>② 주문 · 결제창</h3>
+        <ol style="margin-left:1.2em; font-size:0.76rem; color:var(--text-secondary)">
+          <li>주문서 생성 (`RDB 장바구니` 데이터 정리)</li>
+          <li><strong>결제창 노출 (토스 PG)</strong></li>
+          <li>결제 상태 임시 저장 및 멱등성 검증</li>
+        </ol>
+        <span class="fid">F04-04, F06-01~03</span>
       </div>
-
-      <div class="callout warn">
-        <strong>F-ID 기준:</strong> 본 IA는 기능 정의 §3 번호를 사용합니다.
-        §5에서 랭킹=F03-07 등으로 적힌 부분과 다를 수 있어, 팀 내 ID 통일을 권장합니다.
+      <div class="flow-arrow">→</div>
+      <div class="flow-box step-3">
+        <h3>③ 웹훅 · 정합성</h3>
+        <ol style="margin-left:1.2em; font-size:0.76rem; color:var(--text-secondary)">
+          <li>토스 웹훅 수신 (PG ➡ 서버)</li>
+          <li>주문 완료 승인 및 재고 차감</li>
+          <li>실패/취소 시 주문 복구 (Saga)</li>
+        </ol>
+        <span class="fid">F06-02, 03</span>
       </div>
-
-      <div class="map-wrap">
-        <table class="map">
-          <thead>
-            <tr>
-              <th>No.</th>
-              <th>화면명</th>
-              <th>IA 위치</th>
-              <th>기능 ID</th>
-              <th>Actor</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td>1</td><td>메인</td><td>③ GNB 홈</td><td>F04-03</td><td>Fan</td></tr>
-            <tr><td>2</td><td>온보딩</td><td>① 온보딩</td><td>F01-01~03</td><td>Fan</td></tr>
-            <tr><td>3</td><td>아티스트 홈</td><td>④ 6탭</td><td>F03-01, F02-03</td><td>Fan</td></tr>
-            <tr><td>4</td><td>피드 상세</td><td>④ 피드</td><td>F03-02,03</td><td>Fan/Artist</td></tr>
-            <tr><td>5</td><td>가입 모달</td><td>③ 홈 → 아티스트</td><td>F01-04</td><td>Fan</td></tr>
-            <tr><td>6</td><td>상점 목록</td><td>③ 스토어 / ④ 상점</td><td>F04-01,02</td><td>Fan</td></tr>
-            <tr><td>7</td><td>상품/주문서</td><td>③ 스토어 상세</td><td>F04-02,04</td><td>Fan</td></tr>
-            <tr><td>8</td><td>행사 상세</td><td>③·④ 일정</td><td>F05-01</td><td>Fan</td></tr>
-            <tr><td>10</td><td>결제창</td><td>⑤ ② 결제창</td><td>F06-01~03</td><td>Fan</td></tr>
-            <tr><td>11</td><td>마이페이지</td><td>③ 더보기</td><td>F07-01,02</td><td>Fan</td></tr>
-            <tr><td>12</td><td>알림센터</td><td>③ 홈</td><td>F03-04</td><td>Fan</td></tr>
-            <tr><td>13</td><td>운영자 신청</td><td>②·③ 입점</td><td>F02-01</td><td>Artist</td></tr>
-            <tr><td>14</td><td>관리자 심사</td><td>⑥ Admin</td><td>F02-02, F08-02</td><td>Admin</td></tr>
-            <tr><td>15</td><td>랭킹 팝업</td><td>② 프로모션</td><td>F03-05</td><td>Fan</td></tr>
-            <tr><td>16</td><td>캘린더</td><td>④ 일정</td><td>F03-06</td><td>Fan/Artist</td></tr>
-            <tr><td>17</td><td>LIVE</td><td>④ LIVE</td><td>F03-07</td><td>Fan</td></tr>
-            <tr><td>18</td><td>재입고 알림</td><td>③ 스토어</td><td>F04-06</td><td>Fan</td></tr>
-            <tr><td>21</td><td>커뮤니티 설정</td><td>④ 설정</td><td>F03-10</td><td>Fan</td></tr>
-          </tbody>
-        </table>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box step-4">
+        <h3>④ 완료</h3>
+        <div class="node" style="border:none; padding:0; background:transparent">
+          마이페이지 주문/결제 내역 업데이트 및 배송 대기
+          <span class="fid">F07-02</span>
+        </div>
       </div>
-    </section>
-  </main>
+    </div>
+  </section>
 
+  <!-- S6 ADMIN -->
+  <section class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">⑥</span>
+      <span class="section-title">관리자 (Admin)</span>
+      <span class="section-sub">백오피스 · Fan 앱과 분리</span>
+    </div>
+    <div class="admin-grid">
+      <div>
+        <div class="hdr secondary">입점 심사</div>
+        <div class="node" style="margin-top:6px">
+          파트너 입점 신청서 검토 · 승인/반려
+          <span class="fid">F02-02</span>
+        </div>
+      </div>
+      <div>
+        <div class="hdr secondary">모니터링</div>
+        <div class="node" style="margin-top:6px">
+          주문/결제/재고 현황 대시보드 모니터링
+          <span class="fid">F08-02</span>
+        </div>
+      </div>
+      <div>
+        <div class="hdr secondary">운영 설정</div>
+        <div class="node" style="margin-top:6px">
+          배너 CRUD (`order`) 및 행사 정보 등록 (`community`), 신고 댓글 처리
+          <span class="fid">F04-03, F05-02</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- S7 MAPPING -->
+  <section class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">⑦</span>
+      <span class="section-title">화면–기능 매핑표</span>
+      <span class="section-sub">명세 §5</span>
+    </div>
+
+    <div class="callout warn">
+      <strong>F-ID 가이드:</strong> 본 정보 구조도는 아키텍처 및 페르소나 정의서에 기재된 기능 ID(§3) 기준의 최신 매핑 규칙을 준수합니다.
+    </div>
+
+    <div class="map-wrap">
+      <table class="map">
+        <thead>
+          <tr>
+            <th>No.</th>
+            <th>화면명</th>
+            <th>IA 위치</th>
+            <th>기능 ID</th>
+            <th>Actor</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>메인 홈</td><td>③ GNB 홈</td><td>F04-03</td><td>Fan</td></tr>
+          <tr><td>2</td><td>온보딩</td><td>① 온보딩</td><td>F01-01~03</td><td>Fan</td></tr>
+          <tr><td>3</td><td>아티스트 홈</td><td>④ 7탭</td><td>F03-01, F02-03</td><td>Fan</td></tr>
+          <tr><td>4</td><td>피드 상세</td><td>④ 피드</td><td>F03-02, 03</td><td>Fan/Artist</td></tr>
+          <tr><td>5</td><td>가입 모달</td><td>③ 홈 → 아티스트</td><td>F01-04</td><td>Fan</td></tr>
+          <tr><td>6</td><td>상점 목록</td><td>③ 스토어 / ④ 상점</td><td>F04-01, 02</td><td>Fan</td></tr>
+          <tr><td>7</td><td>상품/주문서</td><td>③ 스토어 상세</td><td>F04-02, 04</td><td>Fan</td></tr>
+          <tr><td>8</td><td>행사 상세</td><td>③·④ 일정</td><td>F05-01, 03</td><td>Fan</td></tr>
+          <tr><td>10</td><td>결제창</td><td>⑤ ② 결제창</td><td>F06-01~03</td><td>Fan</td></tr>
+          <tr><td>11</td><td>마이페이지</td><td>③ 더보기</td><td>F07-01, 02</td><td>Fan</td></tr>
+          <tr><td>12</td><td>알림센터</td><td>③ 홈</td><td>F03-04</td><td>Fan</td></tr>
+          <tr><td>13</td><td>운영자 신청</td><td>②·③ 입점</td><td>F02-01</td><td>Artist</td></tr>
+          <tr><td>14</td><td>관리자 심사</td><td>⑥ Admin</td><td>F02-02, F08-02</td><td>Admin</td></tr>
+          <tr><td>15</td><td>출석 체크</td><td>④ 출석</td><td>F03-07</td><td>Fan</td></tr>
+          <tr><td>16</td><td>캘린더</td><td>④ 일정</td><td>F03-05</td><td>Fan/Artist</td></tr>
+          <tr><td>17</td><td>LIVE</td><td>④ LIVE</td><td>F03-06</td><td>Fan</td></tr>
+          <tr><td>18</td><td>재입고 알림</td><td>③ 스토어</td><td>F04-05</td><td>Fan</td></tr>
+          <tr><td>21</td><td>커뮤니티 설정</td><td>④ 설정</td><td>F03-09</td><td>Fan</td></tr>
+          <tr><td>22</td><td>굿즈 투표</td><td>④ 투표</td><td>F03-08</td><td>Fan</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>
 </body>
 </html>
