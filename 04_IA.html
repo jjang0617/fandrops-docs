@@ -517,13 +517,14 @@ table.map tr:nth-child(even) td { background: var(--bg-subtle); }
       </div>
       <div class="arch-arrow">→<br /><small style="font-size:11px; color:var(--text-muted);">아티스트 선택</small></div>
       <div class="arch-box artist">
-        <strong>아티스트 홈 7탭</strong><br />
-        피드 · 공지 · 상점 · 일정 · LIVE · 출석 · 투표<br />
+        <strong>아티스트 홈 (F03-01)</strong><br />
+        피드 · 프로필 · 투표 · 미디어 · 공지 · 일정 · 출석<br />
         <span style="color:var(--text-muted); font-size:12px;">위버스형 아티스트 전용 공간 · F03-01</span>
       </div>
     </div>
     <div class="callout">
-      <strong>중복 구조가 아닙니다.</strong> GNB의 「커뮤니티·스토어」는 전체 가입 아티스트에 진입하기 전의 <em>전역 요약/탐색</em> 홈이며, 상세 커뮤니티 작성·글쓰기·주문 등은 반드시 특정 <strong>아티스트 홈</strong>에 진입한 뒤 활성화됩니다.
+      <strong>중복 구조가 아닙니다.</strong> GNB 「커뮤니티·스토어」는 <em>전역 탐색</em>이고, 글쓰기·투표·출석 등은 <strong>④ 아티스트 홈 7탭(F03-01)</strong>에서만 동작합니다.
+      <strong>상품 구매(F04)</strong>는 GNB <strong>③ 스토어</strong> 독립 공간 — 아티스트 홈에 「상점」탭 없음. (<a href="requirements/mvp-functional-requirements.md">§3 기능 요구사항</a>)
     </div>
   </section>
 
@@ -595,8 +596,8 @@ table.map tr:nth-child(even) td { background: var(--bg-subtle); }
         </div>
         <div class="v-arrow"></div>
         <div class="node">
-          <strong>심사 통과 시 공간 생성</strong>
-          메일 알림 및 아티스트 홈 공개
+          <strong>심사 통과 시 공간 생성 (F03-01)</strong>
+          7탭(피드·프로필·투표·미디어·공지·일정·출석) + 메일 알림
         </div>
       </div>
 
@@ -632,7 +633,7 @@ table.map tr:nth-child(even) td { background: var(--bg-subtle); }
         <div class="node">
           <span class="badge core">핵심</span>
           <strong>메인 배너</strong>
-          핫이벤트 · 핫딜 프로모션
+          아티스트 홍보·기획전 (환철 담당)
           <span class="fid">F04-03</span>
         </div>
         <div class="node">
@@ -678,8 +679,13 @@ table.map tr:nth-child(even) td { background: var(--bg-subtle); }
       <div class="tab-col">
         <div class="hdr">스토어</div>
         <div class="node">
+          <strong>스토어 탐색</strong>
+          아티스트·상품 (팬가입 수 정렬)
+          <span class="fid">F04-01</span>
+        </div>
+        <div class="node">
           <span class="badge link">바로가기</span>
-          <strong>상시 · 핫딜 목록</strong>
+          <strong>상시 · 드롭스 목록</strong>
           전체 상품 브라우징
           <span class="fid">F04-01,02</span>
         </div>
@@ -702,10 +708,6 @@ table.map tr:nth-child(even) td { background: var(--bg-subtle); }
         <div class="node"><strong>가입/활동 내역</strong>마이페이지 히스토리<span class="fid">F07-01</span></div>
         <div class="node"><strong>주문·결제 내역</strong>영수증 확인 및 결제 복구<span class="fid">F07-02</span></div>
         <div class="node"><strong>알림 설정</strong>푸시 온/오프<span class="fid">F03-04</span></div>
-        <div class="node">
-          <strong>고객센터</strong>FAQ · 1:1 (Phase 2)
-          <span class="badge out">MVP 제외</span>
-        </div>
         <div class="node"><strong>공지사항 / 서비스 정책</strong></div>
         <div class="node" style="border-color:var(--bg-dark)">
           <strong>입점 신청서 제출</strong>
@@ -719,69 +721,70 @@ table.map tr:nth-child(even) td { background: var(--bg-subtle); }
   <section class="section artist-space" id="s4">
     <div class="section-header">
       <span class="section-num">④</span>
-      <span class="section-title" style="color:var(--text-primary)">아티스트 홈 (7탭) — 실제 팬 경험</span>
+      <span class="section-title" style="color:var(--text-primary)">아티스트 홈 (F03-01) — Store 제외</span>
       <span class="section-sub">F03-01</span>
     </div>
 
+    <p class="sub-label" style="margin:0 0 10px; color:var(--text-muted); font-size:12px;">
+      §3 F03-01 탭 순서: 피드 · 프로필 · 투표 · 미디어 · 공지 · 일정 · 출석
+    </p>
     <div class="artist-tabs">
       <div>
         <div class="hdr">피드</div>
         <div class="node" style="margin-top:6px">
           <span class="badge core">핵심</span>
           <ol>
-            <li>게시글 작성·조회</li>
-            <li>댓글 · 하트 · 답글</li>
+            <li>게시글 작성·조회 (텍스트+이미지)</li>
+            <li>댓글 · 좋아요 · 아티스트 답글</li>
           </ol>
           <span class="fid">F03-02, 03</span>
         </div>
       </div>
       <div>
-        <div class="hdr">공지</div>
-        <div class="node" style="margin-top:6px">아티스트 전체 공지 목록 · 상세</div>
-      </div>
-      <div>
-        <div class="hdr">상점</div>
+        <div class="hdr">프로필</div>
         <div class="node" style="margin-top:6px">
-          해당 아티스트 상시/핫딜 상품, RDB 장바구니 담기
-          <span class="fid">F04-01~04</span>
-        </div>
-      </div>
-      <div>
-        <div class="hdr">일정</div>
-        <div class="node" style="margin-top:6px">
-          캘린더 통합 일정 조회
-          <span class="fid">F03-05</span>
-        </div>
-      </div>
-      <div>
-        <div class="hdr">LIVE</div>
-        <div class="node" style="margin-top:6px">
-          라이브 스트리밍 유튜브 임베드 및 알림
-          <span class="fid">F03-06</span>
-        </div>
-      </div>
-      <div>
-        <div class="hdr">출석</div>
-        <div class="node" style="margin-top:6px">
-          <span class="badge core">신규</span>
-          출석체크 수행 (7일 달성 리워드 후보 선정)
-          <span class="fid">F03-07</span>
+          아티스트 소개 · 외부 링크(홈/유튜브/인스타)
+          <span class="fid">F02-03</span>
         </div>
       </div>
       <div>
         <div class="hdr">투표</div>
         <div class="node" style="margin-top:6px">
-          <span class="badge core">신규</span>
-          굿즈 디자인·콘셉트 투표 (팬회원 전용)
+          굿즈 디자인·콘셉트 투표 (팬 가입자 전용)
           <span class="fid">F03-08</span>
         </div>
       </div>
+      <div>
+        <div class="hdr">미디어</div>
+        <div class="node" style="margin-top:6px">
+          라이브 시작 알림 · 유튜브/방송 링크 임베드
+          <span class="fid">F03-06</span>
+        </div>
+      </div>
+      <div>
+        <div class="hdr">공지</div>
+        <div class="node" style="margin-top:6px">
+          아티스트 공지 목록 · 상세
+          <span class="fid">F03-01</span>
+        </div>
+      </div>
+      <div>
+        <div class="hdr">일정</div>
+        <div class="node" style="margin-top:6px">
+          공지·라이브·행사·오픈 일정 (아티스트별)
+          <span class="fid">F03-05, F05-01</span>
+        </div>
+      </div>
+      <div>
+        <div class="hdr">출석</div>
+        <div class="node" style="margin-top:6px">
+          출석 체크 · 7일 달성 리워드 대상자 산정
+          <span class="fid">F03-07</span>
+        </div>
+      </div>
     </div>
-    <div class="artist-extra node">
-      <span class="badge core">제재</span>
-      <strong>커뮤니티 설정 및 도배 제한</strong>
-      댓글 연속 도배 방지 필터링 정책 적용
-      <span class="fid">F03-09</span>
+    <div class="artist-extra callout" style="margin-top:1rem; font-size:13px;">
+      <strong>Store(F04)는 본 화면에 없음.</strong> 상시·드롭스·장바구니·주문은 GNB <strong>③ 스토어</strong> (F04-01~05).
     </div>
   </section>
 
@@ -789,7 +792,7 @@ table.map tr:nth-child(even) td { background: var(--bg-subtle); }
   <section class="section" id="s5">
     <div class="section-header">
       <span class="section-num">⑤</span>
-      <span class="section-title">핫딜 · 결제 흐름 (시간순)</span>
+      <span class="section-title">드롭스 · 결제 흐름 (시간순)</span>
     </div>
 
     <div class="commerce-flow">
@@ -855,8 +858,8 @@ table.map tr:nth-child(even) td { background: var(--bg-subtle); }
       <div>
         <div class="hdr secondary">운영 설정</div>
         <div class="node" style="margin-top:6px">
-          배너 CRUD (`order`) 및 행사 정보 등록 (`community`), 신고 댓글 처리
-          <span class="fid">F04-03, F05-02</span>
+          메인 배너 CRUD (F04-03) · 행사·외부 티켓 링크 (F05-01~03)
+          <span class="fid">F04-03, F05-01~03</span>
         </div>
       </div>
     </div>
@@ -871,7 +874,7 @@ table.map tr:nth-child(even) td { background: var(--bg-subtle); }
     </div>
 
     <div class="callout warn">
-      <strong>F-ID 가이드:</strong> 본 정보 구조도는 아키텍처 및 페르소나 정의서에 기재된 기능 ID(§3) 기준의 최신 매핑 규칙을 준수합니다.
+      <strong>F-ID 가이드:</strong> 기능 ID·탭 구성의 SSOT는 <a href="requirements/mvp-functional-requirements.md">mvp-functional-requirements.md (§3)</a>입니다. 본 IA는 해당 표와 동기화합니다.
     </div>
 
     <div class="map-wrap">
@@ -888,23 +891,24 @@ table.map tr:nth-child(even) td { background: var(--bg-subtle); }
         <tbody>
           <tr><td>1</td><td>메인 홈</td><td>③ GNB 홈</td><td>F04-03</td><td>Fan</td></tr>
           <tr><td>2</td><td>온보딩</td><td>① 온보딩</td><td>F01-01~03</td><td>Fan</td></tr>
-          <tr><td>3</td><td>아티스트 홈</td><td>④ 7탭</td><td>F03-01, F02-03</td><td>Fan</td></tr>
-          <tr><td>4</td><td>피드 상세</td><td>④ 피드</td><td>F03-02, 03</td><td>Fan/Artist</td></tr>
-          <tr><td>5</td><td>가입 모달</td><td>③ 홈 → 아티스트</td><td>F01-04</td><td>Fan</td></tr>
-          <tr><td>6</td><td>상점 목록</td><td>③ 스토어 / ④ 상점</td><td>F04-01, 02</td><td>Fan</td></tr>
-          <tr><td>7</td><td>상품/주문서</td><td>③ 스토어 상세</td><td>F04-02, 04</td><td>Fan</td></tr>
-          <tr><td>8</td><td>행사 상세</td><td>③·④ 일정</td><td>F05-01, 03</td><td>Fan</td></tr>
-          <tr><td>10</td><td>결제창</td><td>⑤ ② 결제창</td><td>F06-01~03</td><td>Fan</td></tr>
-          <tr><td>11</td><td>마이페이지</td><td>③ 더보기</td><td>F07-01, 02</td><td>Fan</td></tr>
-          <tr><td>12</td><td>알림센터</td><td>③ 홈</td><td>F03-04</td><td>Fan</td></tr>
-          <tr><td>13</td><td>운영자 신청</td><td>②·③ 입점</td><td>F02-01</td><td>Artist</td></tr>
-          <tr><td>14</td><td>관리자 심사</td><td>⑥ Admin</td><td>F02-02, F08-02</td><td>Admin</td></tr>
-          <tr><td>15</td><td>출석 체크</td><td>④ 출석</td><td>F03-07</td><td>Fan</td></tr>
-          <tr><td>16</td><td>캘린더</td><td>④ 일정</td><td>F03-05</td><td>Fan/Artist</td></tr>
-          <tr><td>17</td><td>LIVE</td><td>④ LIVE</td><td>F03-06</td><td>Fan</td></tr>
-          <tr><td>18</td><td>재입고 알림</td><td>③ 스토어</td><td>F04-05</td><td>Fan</td></tr>
-          <tr><td>21</td><td>커뮤니티 설정</td><td>④ 설정</td><td>F03-09</td><td>Fan</td></tr>
-          <tr><td>22</td><td>굿즈 투표</td><td>④ 투표</td><td>F03-08</td><td>Fan</td></tr>
+          <tr><td>3</td><td>아티스트 홈</td><td>④ 7탭 (F03-01)</td><td>F03-01</td><td>Fan</td></tr>
+          <tr><td>4</td><td>피드</td><td>④ 피드</td><td>F03-02, 03</td><td>Fan/Artist</td></tr>
+          <tr><td>5</td><td>프로필</td><td>④ 프로필</td><td>F02-03</td><td>Fan</td></tr>
+          <tr><td>6</td><td>굿즈 투표</td><td>④ 투표</td><td>F03-08</td><td>Fan</td></tr>
+          <tr><td>7</td><td>미디어(라이브)</td><td>④ 미디어</td><td>F03-06</td><td>Fan</td></tr>
+          <tr><td>8</td><td>공지</td><td>④ 공지</td><td>F03-01</td><td>Fan</td></tr>
+          <tr><td>9</td><td>일정</td><td>④ 일정</td><td>F03-05, F05-01</td><td>Fan/Artist</td></tr>
+          <tr><td>10</td><td>출석 체크</td><td>④ 출석</td><td>F03-07</td><td>Fan</td></tr>
+          <tr><td>11</td><td>가입 모달</td><td>③ 홈 → 아티스트</td><td>F01-04</td><td>Fan</td></tr>
+          <tr><td>12</td><td>스토어 목록</td><td>③ 스토어 (GNB)</td><td>F04-01, 02</td><td>Fan</td></tr>
+          <tr><td>13</td><td>상품/주문서</td><td>③ 스토어 상세</td><td>F04-02, 04</td><td>Fan</td></tr>
+          <tr><td>14</td><td>행사 상세</td><td>③ 커뮤니티 · ④ 일정</td><td>F05-01~03</td><td>Fan</td></tr>
+          <tr><td>15</td><td>결제창</td><td>⑤ 결제</td><td>F06-01~03</td><td>Fan</td></tr>
+          <tr><td>16</td><td>마이페이지</td><td>③ 더보기</td><td>F07-01, 02</td><td>Fan</td></tr>
+          <tr><td>17</td><td>알림센터</td><td>③ 홈</td><td>F03-04</td><td>Fan</td></tr>
+          <tr><td>18</td><td>운영자 신청</td><td>②·③ 입점</td><td>F02-01</td><td>Artist</td></tr>
+          <tr><td>19</td><td>Admin</td><td>⑥ Admin</td><td>F02-02, F04-03, F05, F08-02</td><td>Admin</td></tr>
+          <tr><td>20</td><td>재입고 알림</td><td>③ 스토어</td><td>F04-05</td><td>Fan</td></tr>
         </tbody>
       </table>
     </div>
