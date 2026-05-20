@@ -550,8 +550,8 @@ body {
       <div class="notscope-item">
         <span class="notscope-x">✕</span>
         <div>
-          <div class="notscope-content-title">오프라인 재고 ERP 급 실시간 연동</div>
-          <div class="notscope-content-why">운영 복잡도 높음. MVP는 온라인 재고·품절·알림 중심.</div>
+          <div class="notscope-content-title">오프라인 재고 ERP 급 실시간 연동(F04-05)</div>
+          <div class="notscope-content-why">명세상 Phase2·운영 복잡도 높음. MVP는 온라인 재고·품절·알림 중심.</div>
         </div>
       </div>
     </div>
@@ -585,8 +585,8 @@ body {
       <tbody>
         <tr>
           <td>핫딜 오픈 순간</td>
-          <td>동시 <strong>~1,000/~10000</strong> 요청 급증 시나리오 (k6 스파이크)</td>
-          <td>대기열(F08-01) + 오버셀 0 검증</td>
+          <td>동시 <strong>~1,000/~10,000</strong> 요청 급증 시나리오 (k6 스파이크)</td>
+          <td>대기열 + 오버셀 0 검증</td>
         </tr>
         <tr>
           <td>상품·상점 Read</td>
@@ -627,7 +627,7 @@ body {
         </tr>
         <tr>
           <td>Read 성능</td>
-          <td>피드·랭킹·행사 등 Read <code>P95 &lt; 80~120ms</code>, <strong>상품 조회</strong>는 <code>~300 RPS</code> 전제와 함께 기록<br></td>
+          <td>피드·행사 등 Read <code>P95 &lt; 80~120ms</code>, <strong>상품 조회</strong>는 <code>~300 RPS</code> 전제와 함께 기록<br></td>
           <td>k6 + Grafana</td>
         </tr>
         <tr>
@@ -689,14 +689,12 @@ body {
           <td><div class="domain-badge">Identity / Security / Communication</div></td>
           <td>
             <div class="team-detail">
-              <span class="team-scope">[F01-01~03, F02-01~02, F04-03, F08-01]</span>
+              <span class="team-scope">[F01-01~03, F02-01~02, F03-04]</span>
               <span class="team-tagline">신뢰·인증·알림 채널</span>
               <ul class="team-bullets">
-                <li>이메일·소셜 가입 · JWT·인가 · Rate Limiting</li>
-                <li>핫딜 대기열·레이트리밋</li>
+                <li>이메일·소셜 가입 · JWT·인가</li>
                 <li>알림 <strong>전송</strong> — 발행·페이로드는 <strong>알림 이벤트 표</strong></li>
                 <li>입점 신청 · Admin 심사·승인 · <strong>승인 시 이벤트 발행</strong> (공간 생성 소비는 정환철)</li>
-                <li>배너 Admin <strong>CRUD</strong> (노출 정책·쿼리는 정환철)</li>
               </ul>
             </div>
           </td>
@@ -706,16 +704,19 @@ body {
           <td><div class="domain-badge">Community / Content</div></td>
           <td>
             <div class="team-detail">
-              <span class="team-scope">[F03-01~07, F05-01~03, F02-03 Read, F04-03 노출, F07-01]</span>
-              <span class="team-tagline">커뮤니티·행사·콘텐츠 — 피드·댓글·일정·랭킹·라이브</span>
+              <span class="team-scope">[F03-01~08, F05-01~03, F01-04, F02-03, F07-01]</span>
+              <span class="team-tagline">커뮤니티·행사·콘텐츠 — 피드·댓글·하트·일정·출석·투표·라이브</span>
               <ul class="team-bullets">
                 <li>승인 이벤트 소비 → 공간·탭 생성 (실패 시 재시도·DLQ/failed_row·리컨실)</li>
+                <li>팬 가입(아티스트별) + 팬 수 증가</li>
+                <li>아티스트 프로필 공개 및 공간/탭 생성</li>
                 <li>게시글 작성·조회 · 댓글·하트·정책·도배</li>
-                <li>일정 · 랭킹 · 라이브 URL·임베드</li>
-                <li>행사·외부 티켓 링크 등록·검증·노출 (F05-02 Admin 보정은 표지민)</li>
+                <li>출석 체크(7일 달성 리워드 대상자 산정) 및 굿즈 투표(이미지 선택지, 팬 가입자 전용)</li>
+                <li>일정 · 라이브 URL·임베드</li>
+                <li>행사·외부 티켓 링크 등록·검증·노출</li>
                 <li>프로필·SNS 팬 Read · 배너 노출 정책·메인 Read</li>
                 <li>마이페이지 활동 <strong>집계/BFF 오너</strong> (형성빈·장성재 내부 API 조립)</li>
-                <li>피드·랭킹·행사 캐시 · 커서 페이징 · N+1</li>
+                <li>피드·행사 캐시 · 커서 페이징 · N+1</li>
               </ul>
             </div>
           </td>
@@ -725,15 +726,14 @@ body {
           <td><div class="domain-badge">Commerce / Order / Inventory</div></td>
           <td>
             <div class="team-detail">
-              <span class="team-scope">[F04-01~04, F04-06, F01-04, F02-03, F07-02]</span>
+              <span class="team-scope">[F04-01~05, F04-03 배너 Admin, F07-02]</span>
               <span class="team-tagline">상품·스토어·주문 축 — DTO·Read·Write 동일 오너</span>
               <ul class="team-bullets">
                 <li>상품 CRUD / 목록·상세·스토어 Read</li>
                 <li>핫딜 재고·선착순 동시성</li>
-                <li>장바구니·주문 (저장소 RDBvsRedis 선택 Phase1 확정)</li>
+                <li>장바구니·주문 (저장소 RDB 사용 확정 — ADR-003)</li>
                 <li>재입고 이벤트 발행</li>
-                <li>팬 가입(+1)</li>
-                <li>아티스트 프로필 편집</li>
+                <li>배너 Admin CRUD (단독샵/팬행사/Store 프로모션 배너 등록)</li>
                 <li>주문 내역 (결제·PG 상태는 장성재)</li>
               </ul>
             </div>
@@ -741,18 +741,19 @@ body {
         </tr>
         <tr>
           <td>장성재</td>
-          <td><div class="domain-badge">Payment / Integration</div></td>
+          <td><div class="domain-badge">Payment / Traffic Gate / Integration</div></td>
           <td>
             <div class="team-detail">
-              <span class="team-scope">[F06-01~05, F07-02 결제]</span>
-              <span class="team-tagline">결제·PG·E2E — 웹훅 이후 정합성 단일 구현 오너</span>
+              <span class="team-scope">[F06-01~03, F07-02 결제, 대기열·RateLimit]</span>
+              <span class="team-tagline">결제·PG · Traffic Gate — 웹훅 이후 정합성 및 진입 제한 정책 오너</span>
               <ul class="team-bullets">
                 <li>토스페이먼츠 · 웹훅 · 멱등 · 상태/재시도</li>
+                <li>핫딜 대기열(Access Ticket) 발급 및 RateLimit 정책 수립</li>
                 <li>E2E(주문~결제~알림) · 웹훅 후 주문·재고·보상</li>
                 <li>마이페이지 결제·PG 상태 조회</li>
                 <li><strong>E2E Sync 오너</strong> — 장바구니→결제→이벤트 발행→표지민 전송</li>
               </ul>
-              <span class="team-note">형성빈(주문)·표지민(채널)과 계약 동기화. 이벤트 버스는 MVP에서 DB/큐/스케줄러 대체 가능.</span>
+              <span class="team-note">형성빈(주문/대기열 검증)·표지민(채널)·지영재(Nginx/ALB 설정)와 계약 동기화.</span>
             </div>
           </td>
         </tr>
@@ -771,7 +772,7 @@ body {
       </thead>
       <tbody>
         <tr>
-          <td>재입고 (F04-06)</td>
+          <td>재입고 (F04-05)</td>
           <td><strong>형성빈</strong></td>
           <td><strong>표지민</strong></td>
         </tr>
@@ -781,7 +782,7 @@ body {
           <td><strong>표지민</strong></td>
         </tr>
         <tr>
-          <td>라이브 오픈·시작 알림 (F03-07)</td>
+          <td>라이브 시작 알림 (F03-06)</td>
           <td><strong>정환철</strong></td>
           <td><strong>표지민</strong></td>
         </tr>
@@ -819,19 +820,19 @@ body {
           </tr>
           <tr>
             <td>표지민</td>
-            <td>JWT·소셜·인가 · RateLimit 설계 · Admin 심사 플로 · 승인 <strong>도메인 이벤트</strong> 스키마 · 배너(Admin) 데이터 모델</td>
+            <td>JWT·소셜·인가 · 약관 동의 · 계정 복구 설계 · Admin 심사 플로 · 승인 <strong>도메인 이벤트</strong> 스키마</td>
           </tr>
           <tr>
             <td>정환철</td>
-            <td>피드·댓글·일정·행사·랭킹·라이브 ERD · 공간 생성 <strong>실패·리컨실</strong> 초안 · 배너 노출 쿼리 · 캐시·커서 · 댓글 정책 초안</td>
+            <td>피드·댓글·일정·행사·출석·투표·라이브 ERD · 공간 생성 <strong>실패·리컨실</strong> 초안 · 배너 노출 쿼리 · 캐시·커서 · 댓글 정책 초안 · 팬 가입 · 아티스트 프로필 공개</td>
           </tr>
           <tr>	
             <td>형성빈</td>
-            <td>상품 ERD · 목록·상세·DTO · 장바구니 <strong>RDBvsRedis 확정</strong> · 주문·핫딜 재고 · 팬 가입 · 아티스트 프로필 편집</td>
+            <td>상품 ERD · 목록·상세·DTO · 장바구니 <strong>RDB 사용 확정 (ADR-003)</strong> · 주문·핫딜 재고 · 배너 Admin 데이터 모델</td>
           </tr>
           <tr>
             <td>장성재</td>
-            <td>결제·주문 상태 ERD · 토스 웹훅·멱등 · 결제·보상 시퀀스(형성빈과 스키마 합의)</td>
+            <td>결제·주문 상태 ERD · 토스 웹훅·멱등 · 결제·보상 시퀀스(형성빈과 스키마 합의) · 대기열·RateLimit 설계</td>
           </tr>
           <tr>
             <td>전원</td>
@@ -854,19 +855,19 @@ body {
           </tr>
           <tr>
             <td>표지민</td>
-            <td>Auth 전체 · Bucket4j · Admin 심사 API · 배너 Admin API · 알림 발송 어댑터 1차</td>
+            <td>Auth 전체 · 계정 복구 · Admin 심사 API · 알림 발송 어댑터 1차</td>
           </tr>
           <tr>
             <td>정환철</td>
-            <td>공간 생성 소비 · 배너 노출 · 피드·댓글·일정·라이브·행사 API · Redis 캐시 · N+1 1차</td>
+            <td>공간 생성 소비 · 배너 노출 · 피드·댓글·일정·출석·투표·라이브·행사 API · Redis 캐시 · N+1 1차 · 팬 가입 API</td>
           </tr>
           <tr>
             <td>형성빈</td>
-            <td>상품 CRUD·목록·상세 Read · 장바구니·주문 · 핫딜 동시성 1차 · 팬 가입 · 프로필 편집 · 재입고·이벤트 발행</td>
+            <td>상품 CRUD·목록·상세 Read · 장바구니(RDB)·주문 · 핫딜 동시성 1차 · 재입고·이벤트 발행 · 배너 Admin API</td>
           </tr>
           <tr>
             <td>장성재</td>
-            <td>토스 결제·웹훅 · 멱등 · 주문-결제 연동 · E2E·보상 본격화 · <strong>장바구니→결제→알림 Sync</strong>(형성빈·표지민)</td>
+            <td>토스 결제·웹훅 · 멱등 · 주문-결제 연동 · 대기열·RateLimit Filter/Config 적용</td>
           </tr>
         </tbody>
       </table>
@@ -885,19 +886,19 @@ body {
           </tr>
           <tr>
             <td>표지민</td>
-            <td>핫딜 대기열(Sorted Set)·SSE/폴링 순번 · 수신 이벤트→알림 전송 연동(표 참조) · RateLimit 고도화</td>
+            <td>수신 이벤트→알림 전송 연동(표 참조)</td>
           </tr>
           <tr>
             <td>정환철</td>
-            <td>스탬피드 방어 · EXPLAIN/인덱스 · FE 피드·행사·일정·댓글 · 랭킹 · 마이페이지 활동 <strong>집계/BFF</strong> · 댓글 정책 고도화</td>
+            <td>스탬피드 방어 · EXPLAIN/인덱스 · FE 피드·행사·일정·댓글·출석·투표 · 마이페이지 활동 <strong>집계/BFF</strong> · 댓글 정책 고도화</td>
           </tr>
           <tr>
             <td>형성빈</td>
-            <td>Redisson 락 비교 · 주문-재고 경계 · FE 상점·장바구니·주문서</td>
+            <td>Redisson 락 비교 · 주문-재고 경계 · FE 상점·장바구니(RDB)·주문서</td>
           </tr>
           <tr>
             <td>장성재</td>
-            <td>결제 실패·취소 시 주문/재고 복구 · 웹훅·멱등 재현 · FE 결제 연동 · Outbox/내부 큐</td>
+            <td>대기열(Sorted Set)·Access Ticket 발급 및 검증 · RateLimit 고도화 · 결제 실패·취소 시 주문/재고 복구 · 웹훅·멱등 재현 · FE 결제 연동 · Outbox/내부 큐</td>
           </tr>
         </tbody>
       </table>
@@ -916,7 +917,7 @@ body {
           </tr>
           <tr>
             <td>표지민</td>
-            <td>429·대기열 depth·매크로 유사 시나리오 차단율</td>
+            <td>알림 전송 처리량 검증</td>
           </tr>
           <tr>
             <td>정환철</td>
@@ -928,7 +929,7 @@ body {
           </tr>
           <tr>
             <td>장성재</td>
-            <td>결제 실패 복구 SLA · 웹훅·재고·주문 수렴 · 멱등·중복 웹훅 · Write P95 <strong>(주문 ~100 TPS)</strong></td>
+            <td>429·대기열 depth·매크로 차단율 검증 · 결제 실패 복구 SLA · 웹훅·재고·주문 수렴 · 멱등·중복 웹훅 · Write P95 <strong>(주문 ~100 TPS)</strong></td>
           </tr>
         </tbody>
       </table>
@@ -951,19 +952,19 @@ body {
           </tr>
           <tr>
             <td>표지민</td>
-            <td>Auth·대기열·알림 OpenAPI · Admin·배너 문서</td>
+            <td>Auth·알림 OpenAPI · Admin 입점 심사 문서</td>
           </tr>
           <tr>
             <td>정환철</td>
-            <td>Read·캐시 STAR · 커뮤니티·행사 API 문서</td>
+            <td>커뮤니티·캐시 STAR · 커뮤니티·행사·일정·출석·투표 API 문서</td>
           </tr>
           <tr>
             <td>형성빈</td>
-            <td>핫딜·락 전략 보고서 · 상품·주문 API 문서</td>
+            <td>핫딜·락 전략 보고서 · 배너 Admin · 상품·주문 API 문서</td>
           </tr>
           <tr>
             <td>장성재</td>
-            <td>결제·E2E·멱등 STAR · 결제 시퀀스 다이어그램</td>
+            <td>결제·대기열·RateLimit·E2E 멱등 STAR · 결제/대기열 시퀀스 다이어그램</td>
           </tr>
         </tbody>
       </table>
