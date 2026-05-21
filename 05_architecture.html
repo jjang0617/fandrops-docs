@@ -495,7 +495,7 @@ code {
       <div class="stack-item">
         <div class="stack-category">Build</div>
         <div class="stack-name">Gradle (Kotlin DSL)</div>
-        <div class="stack-reason">멀티모듈 서브프로젝트 의존성 방향을 빌드 레벨에서 강제. 잘못된 모듈 참조는 컴파일 실패로 조기 차단. 자세한 사항은 <a href="adr/ADR-002-per-layer-gradle-modules.md">ADR-002</a> 참조.</div>
+        <div class="stack-reason">멀티모듈 서브프로젝트 의존성 방향을 빌드 레벨에서 강제. 잘못된 모듈 참조는 컴파일 실패로 조기 차단.</div>
       </div>
       <div class="stack-item">
         <div class="stack-category">API Style</div>
@@ -509,7 +509,7 @@ code {
       <div class="stack-item">
         <div class="stack-category">RDBMS</div>
         <div class="stack-name">MySQL 8.x (AWS RDS)</div>
-        <div class="stack-reason">주문·결제·재고 상태 정합성을 트랜잭션으로 보장. 동시성 제어를 위한 비관락(<code>SELECT … FOR UPDATE</code>) 및 단일 쿼리 원자적 업데이트(Atomic Update) 병용. 자세한 스키마는 <a href="erd/erd-design.md">ERD 설계 문서</a> 참조.</div>
+        <div class="stack-reason">주문·결제·재고 상태 정합성을 트랜잭션으로 보장. 동시성 제어를 위한 비관락(<code>SELECT … FOR UPDATE</code>) 및 단일 쿼리 원자적 업데이트(Atomic Update) 병용.</div>
       </div>
       <div class="stack-item">
         <div class="stack-category">ORM</div>
@@ -519,7 +519,7 @@ code {
       <div class="stack-item">
         <div class="stack-category">Cache / 분산락</div>
         <div class="stack-name">Redis (AWS ElastiCache) + Redisson</div>
-        <div class="stack-reason">핫딜 대기열 Sorted Set, 재고 분산락, 랭킹 집계, Read 캐시. Redisson으로 <code>RLock</code> 비교 실험(Phase 3). 대기열 상태 관리는 <a href="state/invariants-and-state-machines.md#6-wait_queue-상태-머신">대기열 상태 머신 문서</a> 참조.</div>
+        <div class="stack-reason">핫딜 대기열 Sorted Set, 재고 분산락, 랭킹 집계, Read 캐시. Redisson으로 <code>RLock</code> 비교 실험(Phase 3).</div>
       </div>
       <div class="stack-item">
         <div class="stack-category">Migration</div>
@@ -557,7 +557,7 @@ code {
       <div class="stack-item">
         <div class="stack-category">PG</div>
         <div class="stack-name">토스페이먼츠</div>
-        <div class="stack-reason">단일 PG로 깊게 — 멱등·웹훅·실패 복구에 리소스 집중. 웹훅 수신 멱등성 보장. 시퀀스 근거는 <a href="sequence/payment-flow-reason.md">결제·주문 시퀀스 문서</a> 참조.</div>
+        <div class="stack-reason">단일 PG로 깊게 — 멱등·웹훅·실패 복구에 리소스 집중. 웹훅 수신 멱등성 보장.</div>
       </div>
       <div class="stack-item">
         <div class="stack-category">알림</div>
@@ -596,7 +596,7 @@ code {
       <div class="stack-item">
         <div class="stack-category">API 문서</div>
         <div class="stack-name">SpringDoc (Swagger/OpenAPI 3)</div>
-        <div class="stack-reason">Phase 1에서 API Mock 계약 동결 후, 최종 확정판 자동 생성. API 스펙은 <a href="api/mvp-api-spec.md">MVP API 명세</a> 참조.</div>
+        <div class="stack-reason">Phase 1에서 API Mock 계약 동결 후, 최종 확정판 자동 생성.</div>
       </div>
     </div>
 
@@ -631,7 +631,7 @@ code {
 
     <p class="body-text">
       <strong>멀티모듈 모놀리스</strong> — 하나의 Spring Boot 프로세스로 배포하되,
-      코드 경계는 Gradle 서브프로젝트로 분리하여 의존성 방향을 컴파일 단계에서 강제한다. 관련 결정 사항은 <a href="adr/ADR-001-multi-module-monolith.md">ADR-001</a>과 <a href="adr/ADR-002-per-layer-gradle-modules.md">ADR-002</a>를 참고한다.
+      코드 경계는 Gradle 서브프로젝트로 분리하여 의존성 방향을 컴파일 단계에서 강제한다.
     </p>
 
     <div class="subsection-title">레포지토리 디렉터리 구조</div>
@@ -731,7 +731,6 @@ fandrops/<br>
 
     <div class="rule-block">
       <strong>검증 및 탐색</strong> — <code>./gradlew :modules:order:order-domain:dependencies</code> 로 Spring 누수 확인 가능.
-      자세한 의존성 구조 규칙은 <a href="architecture/architecture.md">아키텍처 규칙 상세 문서</a>를 참고한다.
     </div>
 
     <div class="subsection-title">도메인 오너십 → 모듈 매핑</div>
@@ -742,8 +741,8 @@ fandrops/<br>
       <tbody>
         <tr><td>지영재</td><td><code>apps/api-server</code> · 인프라</td><td>AWS · CI/CD · Prometheus/Grafana · k6 부하 테스트</td></tr>
         <tr><td>표지민</td><td><code>user</code> · <code>notification</code></td><td>로그인(카카오/구글) · 회원 가입 · 알림 전송 및 메일 발송</td></tr>
-        <tr><td>정환철</td><td><code>community</code></td><td>아티스트 공간 피드 · 댓글 · 캘린더 · 일정 · 랭킹 투표 · 출석체크</td></tr>
-        <tr><td>형성빈</td><td><code>order</code> · <code>inventory</code></td><td>상품 · 주문서 및 주문 접수 · 핫딜 재고 관리 (원자적 쿼리 예약)</td></tr>
+        <tr><td>정환철</td><td><code>community</code></td><td>아티스트 공간 피드 · 댓글 · 캘린더 · 일정 · 굿즈 투표 · 출석체크</td></tr>
+        <tr><td>형성빈</td><td><code>order</code> · <code>inventory</code></td><td>상품 · 주문서 및 주문 접수 · 드롭스 재고 관리 (원자적 쿼리 예약)</td></tr>
         <tr><td>장성재</td><td><code>payment</code> · 대기열</td><td>토스PG 연동 · 웹훅 수신 멱등성 · Saga 보상 트랜잭션 · Redis 대기열 및 Access Ticket · Bucket4j 레이트리밋</td></tr>
       </tbody>
     </table>
