@@ -432,7 +432,7 @@ body {
         <div>
           <div class="pain-title">매크로·비정상 트래픽 (굿즈·오픈 구간)</div>
           <div class="pain-desc">
-            핫딜·상품 API에 비정상 호출이 몰리면 정상 팬이 불리해집니다.
+            드롭스·상품 API에 비정상 호출이 몰리면 정상 팬이 불리해집니다.
             <strong>완전 차단은 불가능</strong>하므로, Rate Limiting·대기열·429로 <strong>피해 최소화</strong>가 목표입니다.
             <br><span style="font-size:12.5px;color:var(--text-muted);">콘서트 및 팬미팅 행사는 외부 예매 링크</strong>만 제공합니다.</span>
           </div>
@@ -446,7 +446,7 @@ body {
       <div class="pain-item">
         <div class="pain-icon">📦</div>
         <div>
-          <div class="pain-title">핫딜·선착순 재고 오버셀</div>
+          <div class="pain-title">드롭스·선착순 재고 오버셀</div>
           <div class="pain-desc">
             동시 요청 시 재고가 음수로 내려가거나, 품절인데 주문이 확정되는 사고가 납니다.
             MVP에서는 <strong>오버셀 0</strong>을 합격선으로 두고, 락·동시성 전략을 부하로 검증합니다.
@@ -537,14 +537,12 @@ body {
         <div>
           <div class="pain-title">팬 유입을 유도할 인터랙티브 요소 부재</div>
           <div class="pain-desc">
-            플랫폼에 처음 들어온 팬이 서비스에 머물 이유가 없습니다.
-            메인 화면 진입 시 <strong>'이달의 아이돌 뽑기'</strong> 알럿을 노출하고,
-            투표 결과를 실시간 랭킹으로 보여줍니다.
-            몇 강 토너먼트 형식으로 운영할지는 추후 결정하며, 우선 랭킹 집계 구조를 설계합니다.
+            일반 이커머스와 달리 팬덤 플랫폼의 중심은 <strong>아티스트(그룹·멤버)</strong>입니다.
+            팬은 특정 아티스트를 팔로우한 뒤 그 아티스트 공간(피드·굿즈투표·일정·드롭스) 안에서 오래 머무르는 것이 자연스러운 사용 패턴입니다.
+            메인 화면의 범용 참여형 이벤트보다, 아티스트 단위 커뮤니티·커머스가 체류와 재방문을 만든다는 전제로 MVP를 설계합니다.
           </div>
           <div class="pain-tag-row">
-            <span class="ptag ptag-scope">구현 — 이달의 아이돌 랭킹</span>
-            <span class="ptag ptag-partial">토너먼트 단계 수 — 추후 결정</span>
+            <span class="ptag ptag-scope">구현 — 아티스트 홈 · 굿즈투표</span>
           </div>
         </div>
       </div>
@@ -636,7 +634,7 @@ body {
 
     <p class="body-text">
       위 페인포인트를 해결하기 위해 도출된 핵심 기능 요구사항입니다.
-      상세 우선순위(P1·P2·P3)는 <strong>04 · 요구사항 정의서</strong>에서 관리합니다.
+      상세 우선순위(P1·P2·P3)는 <strong>요구사항 정의서</strong>에서 관리합니다.
     </p>
 
     <div class="req-derive">
@@ -657,10 +655,6 @@ body {
       <div class="req-derive-item">
         <span class="req-dot">캘린더</span>
         <div class="req-text">스케줄 파편화 → <strong>아티스트 단위 통합 캘린더</strong>. 드롭·팬미팅·라이브 일정 통합 표시. 라이브 시작 알림 발송.</div>
-      </div>
-      <div class="req-derive-item">
-        <span class="req-dot">랭킹</span>
-        <div class="req-text">유입 유도 → 메인 화면 <strong>'이달의 아이돌 뽑기'</strong> 알럿 + 실시간 랭킹. Redis Sorted Set 기반 집계.</div>
       </div>
       <div class="req-derive-item">
         <span class="req-dot">알림</span>
