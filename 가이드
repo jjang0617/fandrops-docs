@@ -892,10 +892,6 @@ table.map tr:nth-child(even) td { background: var(--bg-subtle); }
       <span class="section-sub">명세 §5</span>
     </div>
 
-    <div class="callout warn">
-      <strong>F-ID 가이드:</strong> 기능 ID·탭 구성의 SSOT는 <a href="requirements/mvp-functional-requirements.md">mvp-functional-requirements.md (§3)</a>입니다. 본 IA는 해당 표와 동기화합니다.
-    </div>
-
     <div class="map-wrap">
       <table class="map">
         <thead>
